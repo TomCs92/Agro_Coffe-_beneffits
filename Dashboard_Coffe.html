@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Codificación de caracteres: permite tildes y ñ -->
+    <meta charset="UTF-8">
+    <!-- Viewport responsivo: escala correctamente en móviles y tablets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título que aparece en la pestaña del navegador -->
+    <title>InnovaKit - Finca Cafetera Interactiva</title>
+
+    <!-- =====================================================
+         FUENTES EXTERNAS (Google Fonts)
+         DM Sans: tipografía moderna para cuerpo de texto
+         Georgia: serif nativo del sistema (usado en títulos)
+    ====================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. VARIABLES GLOBALES Y RESET DE ESTILOS
+           =========================================
+           Las variables CSS (--nombre) permiten reutilizar
+           colores y valores en todo el archivo de forma
+           centralizada. Cambiar aquí afecta todo el UI.
+        ========================================= */
+        :root {
+            --bg-color: #071209;        /* Color de fondo general: verde muy oscuro, casi negro */
+            --text-main: #F5EDD8;       /* Color de texto principal: crema cálido */
+            --text-sec: #8A7A6A;        /* Color de texto secundario: gris café */
+            --green-innova: #2D5016;    /* Verde corporativo InnovaKit (usado en bordes de cajas de valor) */
+            --gold-innova: #C8962A;     /* Dorado corporativo (tagline, acentos) */
+
+            /* ── Colores de Zona ──────────────────────────────────────────
+               Cada zona del ecosistema tiene un color identificador.
+               Se define en HEX y también en RGB (sin #) para poder
+               usarlos en rgba() con opacidad variable.
+            ─────────────────────────────────────────────────────────────── */
+            --z1-color: #1ABC9C;        /* Zona 1 – Gateway: turquesa (conectividad/tecnología) */
+            --z1-rgb: 26, 188, 156;     /* Versión RGB de z1 para usar en rgba() */
+
+            --z2-color: #D4A017;        /* Zona 2 – Marquesina/Secafé: dorado (sol/secado) */
+            --z2-rgb: 212, 160, 23;     /* Versión RGB de z2 */
+
+            --z3-color: #27AE60;        /* Zona 3 – Clima: verde natural (naturaleza/exterior) */
+            --z3-rgb: 39, 174, 96;      /* Versión RGB de z3 */
+
+            --z4-color: #C0392B;        /* Zona 4 – Beneficio: rojo/óxido (maquinaria/proceso) */
+            --z4-rgb: 192, 57, 43;      /* Versión RGB de z4 */
+        }
+
+        /* Reset universal: elimina márgenes/padding del navegador
+           y define box-sizing en border-box (el padding no agrega
+           ancho extra al elemento, lo que facilita el layout) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* body y html al 100% de alto/ancho para que la vista
+           ocupe toda la pantalla. overflow:hidden evita scrollbars
+           ya que la app está diseñada como una vista de pantalla completa */
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'DM Sans', sans-serif; /* Fuente principal DM Sans */
+            background-color: var(--bg-color);  /* Fondo oscuro: visible mientras carga la imagen */
+            color: var(--text-main);             /* Color de texto por defecto: crema */
+            overflow: hidden;                    /* Sin scroll en la vista principal */
+        }
+
+        /* =========================================
+           2. CONTENEDOR PRINCIPAL E IMAGEN DE FONDO
+           =========================================
+           .app-container: el wrapper raíz de toda la UI.
+           position:relative permite que los hijos con
+           position:absolute se posicionen respecto a él.
+        ========================================= */
+        .app-container {
+            position: relative;
+            width: 100vw;   /* Ocupa todo el ancho de la ventana */
+            height: 100vh;  /* Ocupa todo el alto de la ventana */
+        }
+
+        /* .farm-image: la imagen isométrica de la finca que actúa
+           como canvas/fondo visual de toda la interfaz.
+           position:absolute con top:0/left:0 la ancla a la esquina.
+           z-index:1 la pone detrás de todos los elementos UI (hotspots, barras)
+           filter:brightness(0.85) la oscurece un 15% para que los
+           textos y botones encima tengan mejor contraste. */
+        .farm-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* La imagen cubre el 100% sin deformarse (recorta si es necesario) */
+            z-index: 1;
+            filter: brightness(0.85); /* Oscurece levemente la imagen para resaltar los elementos UI */
+        }
+
+        /* =========================================
+           3. BARRAS DE NAVEGACIÓN (Top y Bottom)
+           =========================================
+           Ambas barras flotan sobre la imagen con z-index:10
+           (por encima de la imagen con z-index:1 y por debajo
+           del panel lateral con z-index:100)
+        ========================================= */
+
+        /* Barra superior: contiene logo + instrucción táctil */
+        .top-bar {
+            position: absolute; /* Flota sobre la imagen */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;    /* Espaciado interno: arriba/abajo 20px, lados 40px */
+            z-index: 10;           /* Por encima de la imagen */
+            display: flex;
+            justify-content: space-between; /* Logo a la izquierda, instrucción a la derecha */
+            align-items: center;
+            /* Gradiente de arriba hacia abajo (oscuro → transparente):
+               crea la ilusión de que la barra se "desvanece" en la imagen */
+            background: linear-gradient(to bottom, rgba(7, 18, 9, 0.8) 0%, rgba(7, 18, 9, 0) 100%);
+        }
+
+        /* Contenedor del logo (stacks logo + tagline verticalmente) */
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Nombre de la marca: tipografía serif para aspecto premium */
+        .logo {
+            font-family: Georgia, serif; /* Fuente serif para contraste con el cuerpo sans-serif */
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--text-main);
+            letter-spacing: 1px;         /* Espaciado entre letras para elegancia */
+        }
+
+        /* Subtítulo bajo el logo */
+        .tagline {
+            font-size: 12px;
+            color: var(--gold-innova);  /* Dorado corporativo */
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cápsula de instrucción en la esquina superior derecha:
+           le dice al usuario que puede tocar las zonas */
+        .instruction {
+            display: flex;
+            align-items: center;
+            gap: 8px;                                   /* Espacio entre el ícono y el texto */
+            font-size: 14px;
+            color: var(--text-main);
+            background: rgba(45, 80, 22, 0.4);          /* Verde semitransparente */
+            padding: 8px 16px;
+            border-radius: 20px;                         /* Forma de píldora */
+            border: 1px solid rgba(245, 237, 216, 0.2); /* Borde sutil crema */
+        }
+
+        /* Animación de parpadeo aplicada al ícono de la instrucción */
+        .cursor-blink {
+            animation: blink 1.5s infinite; /* Parpadea cada 1.5s, en bucle infinito */
+        }
+
+        /* Keyframes del parpadeo: va de opacidad 1 → 0.3 → 1 */
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;    /* Completamente visible al inicio y fin */
+            }
+
+            50% {
+                opacity: 0.3;  /* Semi-transparente a la mitad del ciclo */
+            }
+        }
+
+        /* Barra inferior: contiene las "pills" de navegación por zona */
+        .bottom-bar {
+            position: absolute; /* Flota sobre la imagen */
+            bottom: 30px;       /* 30px desde el borde inferior */
+            left: 0;
+            width: 100%;
+            z-index: 10;         /* Por encima de la imagen */
+            display: flex;
+            justify-content: center; /* Pilla centradas horizontalmente */
+            gap: 15px;               /* Espacio entre cada pill */
+            flex-wrap: wrap;         /* En pantallas pequeñas, las pills saltan a la siguiente fila */
+            padding: 0 20px;
+        }
+
+        /* Píldora de navegación individual (un botón por zona) */
+        .nav-pill {
+            padding: 10px 20px;
+            border-radius: 30px;           /* Muy redondeado = forma de cápsula/pill */
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;               /* Cambia el cursor a manito al pasar */
+            border: 2px solid transparent; /* El color de borde se asigna en línea (style="") en el HTML */
+            background: rgba(7, 18, 9, 0.7); /* Fondo oscuro semitransparente */
+            color: var(--text-main);
+            backdrop-filter: blur(4px);    /* Efecto de cristal esmerilado detrás de la pill */
+            transition: all 0.3s ease;     /* Anima todos los cambios CSS suavemente */
+            display: flex;
+            align-items: center;
+            gap: 8px;                      /* Espacio entre el emoji y el texto */
+        }
+
+        /* Al pasar el ratón: la pill sube 3px (efecto hover lift) */
+        .nav-pill:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =========================================
+           4. HOTSPOTS (Puntos Interactivos)
+           =========================================
+           Los hotspots son los marcadores pulsantes colocados
+           encima de las zonas de la imagen. Al hacer clic,
+           abren el panel lateral con información de esa zona.
+
+           Estructura HTML de cada hotspot:
+             .hotspot           → contenedor posicionado
+               .hotspot-pulse  → anillo pulsante animado (onda expansiva)
+               .hotspot-core   → punto central sólido
+               .hotspot-tooltip→ etiqueta de nombre que aparece al hover
+        ========================================= */
+
+        /* Contenedor del hotspot: se posiciona con top/left definidos
+           en el HTML (style="top: X%; left: Y%") para cada zona.
+           transform:translate(-50%,-50%) centra el punto exactamente
+           en las coordenadas indicadas. */
+        .hotspot {
+            position: absolute; /* Posición relativa al .app-container */
+            z-index: 20;        /* Por encima de barras (z:10) y de la imagen (z:1) */
+            cursor: pointer;
+            transform: translate(-50%, -50%); /* Centra el hotspot exacto en top/left */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Punto central del hotspot: círculo sólido de color */
+        .hotspot-core {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;                        /* Hace el div circular */
+            background-color: var(--current-color);    /* Color de zona (asignado por ID más abajo) */
+            border: 3px solid #FFF;                    /* Borde blanco para visibilidad */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  /* Sombra para profundidad */
+            position: relative;
+            z-index: 2;                                /* El core va encima del pulse */
+            transition: transform 0.2s ease;           /* Transición suave para el hover */
+        }
+
+        /* Anillo de onda pulsante: un círculo transparente que crece
+           y se desvanece, creando el efecto "radar" o "ping" */
+        .hotspot-pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;          /* Sin relleno, solo borde */
+            border: 2px solid var(--current-color); /* Borde del color de zona */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);       /* Centra sobre el core */
+            animation: pulse-animation 2s infinite; /* Pulsa en bucle de 2 segundos */
+            z-index: 1;                             /* Detrás del core */
+        }
+
+        /* Animación del pulse: expande de 24px → 70px y se desvanece */
+        @keyframes pulse-animation {
+            0% {
+                width: 24px;   /* Empieza del mismo tamaño que el core */
+                height: 24px;
+                opacity: 1;    /* Completamente visible */
+            }
+
+            100% {
+                width: 70px;   /* Crece hasta 70px (casi 3x el tamaño original) */
+                height: 70px;
+                opacity: 0;    /* Se desvanece completamente */
+            }
+        }
+
+        /* Tooltip del hotspot: etiqueta de texto que aparece arriba
+           del hotspot al hacer hover. Por defecto es invisible
+           (opacity:0) y está desplazada 10px hacia abajo.
+           Al hacer hover, sube a su posición y se vuelve visible. */
+        .hotspot-tooltip {
+            position: absolute;
+            bottom: 140%;                          /* Se posiciona encima del hotspot */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px); /* Centrado y ligeramente bajado */
+            background: rgba(7, 18, 9, 0.9);       /* Fondo oscuro casi opaco */
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;                   /* Evita que el texto salte de línea */
+            opacity: 0;                            /* Invisible por defecto */
+            pointer-events: none;                  /* No bloquea clicks mientras está oculto */
+            transition: all 0.3s ease;             /* Transición suave de aparición */
+            border: 1px solid var(--current-color);/* Borde del color de zona */
+        }
+
+        /* Al hover: el core del hotspot escala un 20% (se agranda) */
+        .hotspot:hover .hotspot-core {
+            transform: scale(1.2);
+        }
+
+        /* Al hover: el tooltip sube a su posición final y se hace visible */
+        .hotspot:hover .hotspot-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0); /* Sube 10px a su posición correcta */
+        }
+
+        /* ── Asignación de color por zona ──────────────────────────────
+           Cada hotspot tiene un ID único. Aquí se asigna la variable
+           --current-color según el ID, lo que permite que .hotspot-core
+           y .hotspot-pulse usen el color correcto sin repetir CSS.
+           Esta es una técnica de CSS Custom Properties en cascada.
+        ─────────────────────────────────────────────────────────────── */
+        #hs-gateway {
+            --current-color: var(--z1-color); /* Turquesa para Gateway */
+        }
+
+        #hs-marquesina {
+            --current-color: var(--z2-color); /* Dorado para Secafé */
+        }
+
+        #hs-clima {
+            --current-color: var(--z3-color); /* Verde para Clima */
+        }
+
+        #hs-beneficio {
+            --current-color: var(--z4-color); /* Rojo para Beneficio */
+        }
+
+        /* =========================================
+           5. PANEL LATERAL DESLIZABLE
+           =========================================
+           El panel lateral aparece desde la derecha cuando
+           el usuario hace clic en un hotspot o nav-pill.
+
+           Componentes:
+           - .side-panel-overlay: fondo oscuro semitransparente
+             que aparece detrás del panel (hace focus en el panel
+             y permite cerrar al hacer clic fuera)
+           - .side-panel: el panel en sí que desliza desde la derecha
+           - .panel-content: el área de contenido dentro del panel
+        ========================================= */
+
+        /* Overlay semitransparente que oscurece el fondo cuando el panel está abierto */
+        .side-panel-overlay {
+            position: fixed;   /* fixed: cubre toda la ventana sin importar el scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Negro al 40% de opacidad */
+            z-index: 90;                     /* Debajo del panel (z:100), encima de todo lo demás */
+            opacity: 0;                      /* Invisible por defecto */
+            pointer-events: none;            /* No bloquea interacciones cuando está oculto */
+            transition: opacity 0.4s ease;   /* Aparece/desaparece suavemente */
+        }
+
+        /* Cuando el overlay tiene clase .active (añadida por JS): se muestra */
+        .side-panel-overlay.active {
+            opacity: 1;
+            pointer-events: all; /* Permite capturar clics (para cerrar el panel) */
+        }
+
+        /* El panel lateral en sí */
+        .side-panel {
+            position: fixed;    /* fixed: se queda en el borde derecho de la ventana */
+            top: 0;
+            right: 0;
+            width: 420px;       /* Ancho del panel. Editar aquí para hacerlo más angosto o ancho */
+            max-width: 100vw;   /* En móvil, nunca más ancho que la pantalla */
+            height: 100%;
+            background: rgba(7, 18, 9, 0.97); /* Verde muy oscuro casi opaco */
+            backdrop-filter: blur(10px);       /* Desenfoque del fondo detrás del panel */
+            z-index: 100;                      /* El más alto: siempre al frente */
+            transform: translateX(100%);       /* Empieza oculto a la derecha (fuera de pantalla) */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Animación de deslizamiento "spring" */
+            overflow-y: auto;                  /* Scroll vertical si el contenido es muy largo */
+            /* El color del borde izquierdo se asigna dinámicamente por JS
+               usando la variable --panel-color (el color de la zona seleccionada) */
+            border-left: 4px solid var(--panel-color, var(--text-main));
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); /* Sombra a la izquierda del panel */
+        }
+
+        /* Cuando el panel tiene clase .open (añadida por JS): desliza a la vista */
+        .side-panel.open {
+            transform: translateX(0); /* Vuelve a su posición normal (visible) */
+        }
+
+        /* Botón de cierre (✕) en la esquina superior derecha del panel */
+        .panel-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-sec);  /* Gris café por defecto */
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        /* Al hover: el botón ✕ se vuelve blanco */
+        .panel-close:hover {
+            color: var(--text-main);
+        }
+
+        /* Área de contenido del panel con padding interno */
+        .panel-content {
+            padding: 40px 30px; /* Margen interno del contenido: 40px arriba/abajo, 30px lados */
+        }
+
+        /* ── Estructura Interna del Panel ──────────────────────────────
+           Cada panel tiene:
+           - .panel-header: ícono emoji + título + subtítulo
+           - N × .panel-section: sección con etiqueta + contenido
+           - .value-box: caja de beneficios clave (verde)
+           - .price-box: caja de precio referencia (color de zona)
+        ─────────────────────────────────────────────────────────────── */
+
+        /* Cabecera del panel: ícono grande a la izquierda + título/subtítulo */
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px; /* Espacio bajo la cabecera antes del primer section */
+        }
+
+        /* El emoji grande (48px) que representa cada zona */
+        .panel-icon {
+            font-size: 48px;
+            line-height: 1; /* Evita espacio extra bajo el emoji */
+        }
+
+        /* Contenedor de título y subtítulo (ocupa el espacio restante) */
+        .panel-titles {
+            flex: 1; /* Ocupa todo el ancho disponible junto al ícono */
+        }
+
+        /* Título principal de cada sección del panel */
+        .panel-title {
+            font-family: Georgia, serif; /* Serif para elegancia */
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        /* Subtítulo descriptivo bajo el título */
+        .panel-subtitle {
+            font-size: 14px;
+            color: var(--panel-color); /* Hereda el color de zona del panel */
+            font-weight: 500;
+        }
+
+        /* Contenedor de cada sección de información dentro del panel */
+        .panel-section {
+            margin-bottom: 25px; /* Espacio entre secciones */
+        }
+
+        /* Etiqueta pequeña en mayúsculas sobre cada sección (ej: "¿QUÉ HACE?") */
+        .section-label {
+            font-size: 9px;
+            letter-spacing: 2.5px;        /* Espaciado amplio: estilo "ALLCAPS" editorial */
+            text-transform: uppercase;
+            color: var(--panel-color);     /* Color de zona */
+            margin-bottom: 10px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(138, 122, 106, 0.2); /* Línea separadora muy sutil */
+            padding-bottom: 4px;
+        }
+
+        /* Texto de párrafo en las secciones: color ligeramente más tenue que el texto principal */
+        .section-text {
+            font-size: 14px;
+            line-height: 1.6;   /* Interlineado 1.6 para buena legibilidad */
+            color: #CFC5B3;     /* Crema más tenue que --text-main */
+        }
+
+        /* Lista de ítems usada para enumerar variables, equipos, etc. */
+        .panel-list {
+            list-style: none; /* Elimina los bullets por defecto del navegador */
+            margin-top: 8px;
+        }
+
+        /* Cada ítem de la lista */
+        .panel-list li {
+            position: relative;
+            padding-left: 15px;  /* Espacio para el bullet personalizado */
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #CFC5B3;
+            line-height: 1.4;
+        }
+
+        /* Bullet personalizado "›" usando pseudo-elemento ::before */
+        .panel-list li::before {
+            content: "›";             /* Carácter decorativo en lugar del bullet */
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--panel-color); /* Color de zona para el bullet */
+            font-weight: bold;
+        }
+
+        /* ── Cajas Especiales ───────────────────────────────────────── */
+
+        /* Caja de "Valor para el proceso": lista de beneficios con borde verde a la izquierda */
+        .value-box {
+            background: rgba(255, 255, 255, 0.04); /* Relleno blanco muy sutil */
+            border-left: 3px solid var(--green-innova); /* Borde verde corporativo */
+            padding: 15px;
+            border-radius: 0 8px 8px 0; /* Redondeo solo en las esquinas derechas */
+            margin-top: 15px;
+        }
+
+        /* Override del bullet para los ítems dentro de .value-box (usa ✅ en vez de ›) */
+        .value-box ul li::before {
+            content: "✅";
+            font-size: 10px;
+            top: 3px;
+        }
+
+        /* Caja de precio: al fondo del panel, con fondo del color de zona semi-transparente.
+           IMPORTANTE: el background real se asigna dinámicamente desde JS
+           usando data.rgbaBg (el color de zona con opacidad 15%) */
+        .price-box {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+            /* El fondo se asigna dinámicamente en JS con data.rgbaBg */
+        }
+
+        /* =========================================
+           6. MEDIA QUERIES (Responsividad)
+           =========================================
+           En pantallas <= 768px (tablets/móviles):
+           - Se oculta la instrucción superior (ahorra espacio)
+           - El panel ocupa el 100% del ancho
+           - La barra inferior sube un poco
+           - Las pills se hacen más pequeñas
+        ========================================= */
+        @media (max-width: 768px) {
+            .instruction {
+                display: none; /* Ocultar hint "toca cada zona" en móvil (ahorrar espacio) */
+            }
+
+            .side-panel {
+                width: 100vw; /* En móvil el panel ocupa toda la pantalla */
+            }
+
+            .bottom-bar {
+                bottom: 15px; /* La barra inferior sube de 30px a 15px en móvil */
+            }
+
+            .nav-pill {
+                padding: 8px 12px; /* Pills más compactas en móvil */
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- ══════════════════════════════════════════════════
+             IMAGEN DE FONDO PRINCIPAL
+             Se usa la imagen local del ecosistema de beneficio.
+             El src se puede definir aquí directamente o via JS.
+             alt: texto alternativo de accesibilidad.
+        ══════════════════════════════════════════════════ -->
+        <img id="main-farm-image" class="farm-image" src="Ecosistema beneficio cafe IoT.png" alt="Finca Cafetera Isometrica">
+
+        <!-- ══════════════════════════════════════════════════
+             BARRA SUPERIOR
+             Contiene el logo "InnovaKit" y la instrucción
+             de interacción para el usuario.
+        ══════════════════════════════════════════════════ -->
+        <div class="top-bar">
+            <div class="logo-area">
+                <!-- Logo: nombre de marca con ícono de café -->
+                <div class="logo">☕ InnovaKit</div>
+                <!-- Tagline: nombre del equipo/company debajo del logo -->
+                <div class="tagline">Tecnología por Sense AI</div>
+            </div>
+            <!-- Instrucción visual para el usuario (se oculta en móvil vía CSS) -->
+            <div class="instruction">
+                <span class="cursor-blink">👆</span> Toca cada zona para explorar el ecosistema
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════
+             HOTSPOTS (4 puntos interactivos sobre la imagen)
+             Cada hotspot tiene:
+               - top/left en % para posicionarse sobre su zona
+               - onclick="openPanel('id')" para abrir el panel
+             Para REUBICAR un hotspot: editar top y left en %
+             Para AÑADIR uno nuevo: copiar un bloque, cambiar
+             id, top, left, tooltip y el argumento de openPanel.
+        ══════════════════════════════════════════════════ -->
+
+        <!-- Hotspot 1: Gateway LoRaWAN (esquina superior izquierda aprox.) -->
+        <div class="hotspot" id="hs-gateway" style="top: 15%; left: 18%;" onclick="openPanel('gateway')">
+            <div class="hotspot-pulse"></div>   <!-- Onda expansiva animada -->
+            <div class="hotspot-core"></div>    <!-- Punto central sólido -->
+            <div class="hotspot-tooltip">Gateway Central</div> <!-- Etiqueta de hover -->
+        </div>
+
+        <!-- Hotspot 2: Marquesina/Secafé (zona media izquierda) -->
+        <div class="hotspot" id="hs-marquesina" style="top: 52%; left: 22%;" onclick="openPanel('marquesina')">
+            <div class="hotspot-pulse"></div>
+            <div class="hotspot-core"></div>
+            <div class="hotspot-tooltip">Secafé Marquesina</div>
+        </div>
+
+        <!-- Hotspot 3: Estación Climática (zona media central) -->
+        <div class="hotspot" id="hs-clima" style="top: 28%; left: 50%;" onclick="openPanel('clima')">
+            <div class="hotspot-pulse"></div>
+            <div class="hotspot-core"></div>
+            <div class="hotspot-tooltip">Estación Meteorológica</div>
+        </div>
+
+        <!-- Hotspot 4: Sensores de Beneficio (zona media derecha) -->
+        <div class="hotspot" id="hs-beneficio" style="top: 40%; left: 72%;" onclick="openPanel('beneficio')">
+            <div class="hotspot-pulse"></div>
+            <div class="hotspot-core"></div>
+            <div class="hotspot-tooltip">Sensores de Beneficio</div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════
+             BARRA INFERIOR – PILLS DE NAVEGACIÓN
+             Acceso alternativo a los paneles (además de los hotspots).
+             El border-color de cada pill usa el color de su zona.
+             Para añadir/quitar pills: copiar/eliminar un .nav-pill.
+        ══════════════════════════════════════════════════ -->
+        <div class="bottom-bar">
+            <div class="nav-pill" style="border-color: var(--z1-color);" onclick="openPanel('gateway')">📡 Gateway</div>
+            <div class="nav-pill" style="border-color: var(--z2-color);" onclick="openPanel('marquesina')">☀️ Secafé
+            </div>
+            <div class="nav-pill" style="border-color: var(--z3-color);" onclick="openPanel('clima')">🌦️ Clima</div>
+            <div class="nav-pill" style="border-color: var(--z4-color);" onclick="openPanel('beneficio')">⚙️ Beneficio
+            </div>
+        </div>
+
+        <!-- Overlay oscuro que aparece detrás del panel al abrirlo.
+             El onclick cierra el panel si el usuario hace clic fuera. -->
+        <div class="side-panel-overlay" id="overlay" onclick="closePanel()"></div>
+
+        <!-- ══════════════════════════════════════════════════
+             PANEL LATERAL DESLIZABLE
+             Estructura fija: el contenido interno (#panel-dynamic-content)
+             se inyecta dinámicamente por JS en función de la zona pulsada.
+        ══════════════════════════════════════════════════ -->
+        <div class="side-panel" id="side-panel">
+            <!-- Botón de cierre en la esquina superior derecha del panel -->
+            <button class="panel-close" onclick="closePanel()">✕</button>
+            <!-- Este div recibe el HTML generado por openPanel() -->
+            <div class="panel-content" id="panel-dynamic-content">
+                <!-- El contenido se inyecta dinámicamente vía JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- =========================================
+         SCRIPT PRINCIPAL (Lógica y Datos)
+         =========================================
+         Toda la lógica de la app está aquí:
+         1. Base de datos del ecosistema (ecosistemaData)
+         2. Función openPanel: inyecta HTML y abre el panel
+         3. Función closePanel: cierra el panel y el overlay
+    ========================================= -->
+    <script>
+        // ══════════════════════════════════════════════════════════════
+        // BASE DE DATOS DEL ECOSISTEMA
+        // ══════════════════════════════════════════════════════════════
+        // Objeto principal que contiene la información de cada zona.
+        // Las claves ('gateway', 'marquesina', 'clima', 'beneficio')
+        // deben coincidir con los argumentos de openPanel() en el HTML.
+        //
+        // Estructura de cada zona:
+        //   color     → variable CSS del color de zona (para borde del panel y bullets)
+        //   rgbaBg    → color de zona en rgba() al 15% (fondo de la caja de precio)
+        //   icon      → emoji representativo de la zona
+        //   title     → título principal del panel
+        //   subtitle  → descripción corta bajo el título
+        //   sections  → array de secciones { label, content }
+        //               label   = etiqueta en ALLCAPS (ej: "¿QUÉ HACE?")
+        //               content = HTML a renderizar (párrafos o listas)
+        //   valueBox  → texto HTML para la caja de beneficios clave
+        //   price     → texto de precio referencial (pie del panel)
+        // ══════════════════════════════════════════════════════════════
+        const ecosistemaData = {
+
+            // ── ZONA 1: GATEWAY ──────────────────────────────────────
+            gateway: {
+                color: "var(--z1-color)",          // Turquesa: --z1-color: #1ABC9C
+                rgbaBg: "rgba(26, 188, 156, 0.15)", // Turquesa al 15% (fondo precio)
+                icon: "📡",
+                title: "Gateway LoRaWAN + 4G",
+                subtitle: "El cerebro del ecosistema",
+                sections: [
+                    {
+                        label: "¿Qué hace?",
+                        // Párrafo descriptivo de las funciones del Gateway
+                        content: "<p class='section-text'>El Gateway recibe en tiempo real los datos de todos los sensores de la finca mediante señal LoRa (largo alcance, bajo consumo, sin SIM por sensor) y los transmite a la nube vía 4G. Opera 24/7 de forma autónoma.</p>"
+                    },
+                    {
+                        label: "Variables que centraliza",
+                        // Lista HTML de las variables que el Gateway recibe de todos los sensores
+                        content: "<ul class='panel-list'><li>Datos de temperatura y humedad (Secafé + beneficio)</li><li>Control de peso y humedad del grano (Secafé)</li><li>Estado del ventilador/extractor</li><li>Métricas de la estación meteorológica</li><li>Caudal de agua y estado de válvulas</li></ul>"
+                    },
+                    {
+                        label: "¿Qué dolor resuelve?",
+                        content: "<p class='section-text'>El caficultor ya no necesita estar físicamente en la finca. Toda la información del proceso llega a su celular o computador desde cualquier lugar, en tiempo real, con alertas automáticas si algo sale del rango definido.</p>"
+                    }
+                ],
+                // HTML de la caja de beneficios (usa ✅ como bullets vía CSS)
+                valueBox: "✅ Una sola conexión para toda la finca<br>✅ Sin internet en cada sensor — solo en el Gateway<br>✅ Histórico completo de cada bache y cosecha<br>✅ Base para certificaciones de trazabilidad",
+                price: "Precio referencia: $500.000 COP"
+            },
+
+            // ── ZONA 2: MARQUESINA / SECAFÉ ──────────────────────────
+            marquesina: {
+                color: "var(--z2-color)",           // Dorado: --z2-color: #D4A017
+                rgbaBg: "rgba(212, 160, 23, 0.15)", // Dorado al 15%
+                icon: "☀️",
+                title: "Secafé + Control",
+                subtitle: "Control total del secado del café",
+                sections: [
+                    {
+                        label: "Equipos en esta zona",
+                        content: "<ul class='panel-list'><li>Secafé (co-desarrollado InnovaKit × Sense AI)</li><li>Extractor/Ventilador IoT</li></ul>"
+                    },
+                    {
+                        label: "Variables medidas",
+                        content: "<ul class='panel-list'><li>Temperatura interna del túnel (°C) — tiempo real</li><li>Humedad relativa interna (% HR) — tiempo real</li><li>Humedad del grano (%) — seguimiento por bache</li><li>Peso del bache (kg) — control de pérdida</li><li>% pérdida de peso acumulada — indicador de humedad</li><li>Duración del bache (horas activas)</li><li>Estado y Temp. de activación del ventilador</li></ul>"
+                    },
+                    {
+                        label: "Lógica del control de peso",
+                        // Explica cómo el peso correlaciona con la humedad del grano
+                        content: "<p class='section-text'>A mayor pérdida de peso = mayor pérdida de agua = menor humedad. El Secafé correlaciona el peso con la humedad para predecir con precisión cuándo el café alcanza el punto óptimo (10-11%) sin muestras manuales constantes.</p>"
+                    },
+                    {
+                        label: "Accionables automáticos",
+                        // Acciones que el sistema realiza sin intervención humana
+                        content: "<ul class='panel-list' style='--panel-color: #D4A017;'><li style='list-style-type: none; padding-left: 0;'>⚡ Ventilador se activa cuando T° > umbral</li><li style='list-style-type: none; padding-left: 0;'>⚡ Alerta push al alcanzar % de humedad objetivo</li><li style='list-style-type: none; padding-left: 0;'>⚡ Registro automático de inicio y fin de bache</li></ul>"
+                    },
+                    {
+                        label: "¿Qué dolor resuelve?",
+                        content: "<p class='section-text'>Un café sobre-secado se quiebra y pierde valor. Un café sub-secado genera moho. El Secafé elimina este riesgo económico operando con datos precisos en lugar de intuición.</p>"
+                    }
+                ],
+                valueBox: "✅ Secado uniforme sin puntos calientes<br>✅ Eliminación de pérdidas por secado incorrecto<br>✅ Trazabilidad completa por bache<br>✅ Menor dependencia del criterio del operario",
+                price: "Precio referencia: Incluido en kit InnovaKit"
+            },
+
+            // ── ZONA 3: ESTACIÓN CLIMÁTICA ────────────────────────────
+            clima: {
+                color: "var(--z3-color)",          // Verde: --z3-color: #27AE60
+                rgbaBg: "rgba(39, 174, 96, 0.15)", // Verde al 15%
+                icon: "🌦️",
+                title: "Estación Ambiental",
+                subtitle: "El microclima real de tu finca",
+                sections: [
+                    {
+                        label: "Equipo",
+                        content: "<p class='section-text'>Estación meteorológica Ambient Weather con panel solar incluido. Funciona de forma autónoma, sin cableado externo.</p>"
+                    },
+                    {
+                        label: "Variables medidas",
+                        content: "<ul class='panel-list'><li>Temperatura y Humedad ambiente exterior</li><li>Pluviometría / lluvia acumulada (mm)</li><li>Intensidad y Dirección del viento</li><li>Radiación solar (W/m²) e Índice UV</li></ul>"
+                    },
+                    {
+                        label: "Correlaciones clave con el proceso",
+                        // Explica cómo el clima exterior afecta directamente el proceso de café
+                        content: "<ul class='panel-list'><li><strong>SECADO:</strong> Alta radiación + baja humedad = condiciones ideales. Ajusta tiempo de secado.</li><li><strong>FERMENTACIÓN:</strong> Temp. baja = fermentación lenta.</li><li><strong>COSECHA / LAVADO:</strong> Lluvia disponible correlaciona con planificación y recolección.</li><li><strong>FUMIGACIÓN:</strong> Viento/Lluvia = alerta de no aplicar.</li></ul>"
+                    },
+                    {
+                        label: "¿Qué dolor resuelve?",
+                        content: "<p class='section-text'>El pronóstico del clima de la ciudad no sirve en una ladera andina a 1.600 msnm. Esta estación mide exactamente lo que pasa en el microclima único de la finca.</p>"
+                    }
+                ],
+                valueBox: "✅ Decisiones de cosecha basadas en datos reales<br>✅ Correlación automática clima-proceso en app<br>✅ Reducción de pérdidas por clima imprevisto<br>✅ Registro histórico de temporadas",
+                price: "Precio referencia: Incluido en kit base"
+            },
+
+            // ── ZONA 4: SENSORES DE BENEFICIO ────────────────────────
+            beneficio: {
+                color: "var(--z4-color)",           // Rojo: --z4-color: #C0392B
+                rgbaBg: "rgba(192, 57, 43, 0.15)",  // Rojo al 15%
+                icon: "⚙️",
+                title: "Sensores de Beneficio",
+                subtitle: "Control del despulpe, fermentación y lavado",
+                sections: [
+                    {
+                        label: "Equipos en esta zona",
+                        content: "<ul class='panel-list'><li>Sensores de temperatura y humedad (múltiples)</li><li>Caudalímetros (ingreso y salida)</li><li>Válvulas inteligentes de control de flujo</li></ul>"
+                    },
+                    {
+                        label: "Variables medidas",
+                        content: "<ul class='panel-list'><li>Temperatura del agua (fermentación) y ambiente</li><li>Humedad relativa del espacio</li><li>Caudal ingreso/salida y Volumen acumulado (L)</li><li>Estado de válvulas y Duración de fases</li></ul>"
+                    },
+                    {
+                        label: "Accionables automáticos",
+                        content: "<ul class='panel-list'><li style='list-style-type: none; padding-left: 0;'>⚡ Válvula de llenado corta al volumen definido</li><li style='list-style-type: none; padding-left: 0;'>⚡ Alerta de T° fuera de rango (18–25°C)</li><li style='list-style-type: none; padding-left: 0;'>⚡ Alerta de duración límite de fermentación</li></ul>"
+                    },
+                    {
+                        label: "¿Qué dolor resuelve?",
+                        content: "<p class='section-text'>Un sobre-fermentado arruina el sabor y penaliza el precio. Además, el desperdicio de agua en el lavado es un problema económico/ambiental crítico. El sistema elimina la intuición.</p>"
+                    }
+                ],
+                valueBox: "✅ Fermentación controlada = sabor consistente<br>✅ Ahorro de agua hasta 40% (válvulas auto)<br>✅ Trazabilidad completa (Lts, Tiempo, Temp)<br>✅ Base para certificaciones hídricas",
+                price: "Caudalímetro $280K + Válvula $480K COP"
+            }
+        };
+
+        // ══════════════════════════════════════════════════════════════
+        // REFERENCIAS AL DOM
+        // Se guardan referencias a los elementos clave del HTML para
+        // no tener que buscarlos en el DOM en cada llamada a función.
+        // ══════════════════════════════════════════════════════════════
+        const sidePanel = document.getElementById('side-panel');         // El panel lateral
+        const overlay = document.getElementById('overlay');               // El fondo oscuro
+        const dynamicContent = document.getElementById('panel-dynamic-content'); // Área de contenido del panel
+
+        // ══════════════════════════════════════════════════════════════
+        // FUNCIÓN: openPanel(zoneId)
+        // ══════════════════════════════════════════════════════════════
+        // Recibe el ID de una zona ('gateway', 'marquesina', 'clima', 'beneficio')
+        // y realiza 3 acciones:
+        //   1. Establece el color del panel según la zona
+        //   2. Construye el HTML del contenido del panel
+        //   3. Inyecta el HTML en el DOM y activa la animación de apertura
+        // ══════════════════════════════════════════════════════════════
+        function openPanel(zoneId) {
+            // Obtener los datos de la zona desde ecosistemaData
+            const data = ecosistemaData[zoneId];
+            if (!data) return; // Salir si el ID no existe (guard clause)
+
+            // 1. Cambiar el color del borde izquierdo del panel al color de la zona
+            //    Esto actualiza la variable CSS --panel-color usada en el CSS del .side-panel
+            sidePanel.style.setProperty('--panel-color', data.color);
+
+            // 2. Construir el HTML: empezar con el encabezado (ícono + título + subtítulo)
+            let htmlHTML = `
+                <div class="panel-header">
+                    <div class="panel-icon">${data.icon}</div>
+                    <div class="panel-titles">
+                        <h2 class="panel-title">${data.title}</h2>
+                        <h3 class="panel-subtitle">${data.subtitle}</h3>
+                    </div>
+                </div>
+            `;
+
+            // 3. Iterar sobre el array data.sections y añadir cada sección al HTML
+            //    Cada sección tiene una etiqueta (label) y contenido HTML (content)
+            data.sections.forEach(sec => {
+                htmlHTML += `
+                    <div class="panel-section">
+                        <div class="section-label">${sec.label}</div>
+                        ${sec.content}
+                    </div>
+                `;
+            });
+
+            // 4. Añadir la caja de valor (beneficios clave de esta zona)
+            htmlHTML += `
+                <div class="panel-section">
+                    <div class="section-label" style="color: var(--text-main);">Valor para el proceso</div>
+                    <div class="value-box">
+                        <p class="section-text" style="font-size: 13px;">${data.valueBox}</p>
+                    </div>
+                </div>
+            `;
+
+            // 5. Añadir la caja de precio al fondo del panel
+            //    data.rgbaBg es el color de zona en rgba al 15% (fondo de la caja)
+            htmlHTML += `
+                <div class="price-box" style="background: ${data.rgbaBg};">
+                    ${data.price}
+                </div>
+            `;
+
+            // 6. Inyectar el HTML construido en el contenedor del panel
+            dynamicContent.innerHTML = htmlHTML;
+
+            // 7. Activar el panel: añadir clase 'open' → translateX(0) → desliza a la vista
+            sidePanel.classList.add('open');
+            // 8. Activar el overlay oscuro de fondo
+            overlay.classList.add('active');
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        // FUNCIÓN: closePanel()
+        // ══════════════════════════════════════════════════════════════
+        // Cierra el panel lateral y el overlay removiendo las clases
+        // 'open' (del panel) y 'active' (del overlay).
+        // La animación de cierre es manejada por el CSS:
+        //   .side-panel → transform: translateX(100%) con transition
+        //   .side-panel-overlay → opacity: 0 con transition
+        // ══════════════════════════════════════════════════════════════
+        function closePanel() {
+            sidePanel.classList.remove('open');    // Desliza el panel fuera de la vista
+            overlay.classList.remove('active');    // Desvanece el fondo oscuro
+        }
+
+    </script>
+</body>
+
+</html>
