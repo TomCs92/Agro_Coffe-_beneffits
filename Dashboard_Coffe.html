@@ -28,28 +28,41 @@
            centralizada. Cambiar aquí afecta todo el UI.
         ========================================= */
         :root {
-            --bg-color: #071209;        /* Color de fondo general: verde muy oscuro, casi negro */
-            --text-main: #F5EDD8;       /* Color de texto principal: crema cálido */
-            --text-sec: #8A7A6A;        /* Color de texto secundario: gris café */
-            --green-innova: #2D5016;    /* Verde corporativo InnovaKit (usado en bordes de cajas de valor) */
-            --gold-innova: #C8962A;     /* Dorado corporativo (tagline, acentos) */
+            --bg-color: #071209;
+            /* Color de fondo general: verde muy oscuro, casi negro */
+            --text-main: #F5EDD8;
+            /* Color de texto principal: crema cálido */
+            --text-sec: #8A7A6A;
+            /* Color de texto secundario: gris café */
+            --green-innova: #2D5016;
+            /* Verde corporativo InnovaKit (usado en bordes de cajas de valor) */
+            --gold-innova: #C8962A;
+            /* Dorado corporativo (tagline, acentos) */
 
             /* ── Colores de Zona ──────────────────────────────────────────
                Cada zona del ecosistema tiene un color identificador.
                Se define en HEX y también en RGB (sin #) para poder
                usarlos en rgba() con opacidad variable.
             ─────────────────────────────────────────────────────────────── */
-            --z1-color: #1ABC9C;        /* Zona 1 – Gateway: turquesa (conectividad/tecnología) */
-            --z1-rgb: 26, 188, 156;     /* Versión RGB de z1 para usar en rgba() */
+            --z1-color: #1ABC9C;
+            /* Zona 1 – Gateway: turquesa (conectividad/tecnología) */
+            --z1-rgb: 26, 188, 156;
+            /* Versión RGB de z1 para usar en rgba() */
 
-            --z2-color: #D4A017;        /* Zona 2 – Marquesina/Secafé: dorado (sol/secado) */
-            --z2-rgb: 212, 160, 23;     /* Versión RGB de z2 */
+            --z2-color: #D4A017;
+            /* Zona 2 – Marquesina/Secafé: dorado (sol/secado) */
+            --z2-rgb: 212, 160, 23;
+            /* Versión RGB de z2 */
 
-            --z3-color: #27AE60;        /* Zona 3 – Clima: verde natural (naturaleza/exterior) */
-            --z3-rgb: 39, 174, 96;      /* Versión RGB de z3 */
+            --z3-color: #27AE60;
+            /* Zona 3 – Clima: verde natural (naturaleza/exterior) */
+            --z3-rgb: 39, 174, 96;
+            /* Versión RGB de z3 */
 
-            --z4-color: #C0392B;        /* Zona 4 – Beneficio: rojo/óxido (maquinaria/proceso) */
-            --z4-rgb: 192, 57, 43;      /* Versión RGB de z4 */
+            --z4-color: #C0392B;
+            /* Zona 4 – Beneficio: rojo/óxido (maquinaria/proceso) */
+            --z4-rgb: 192, 57, 43;
+            /* Versión RGB de z4 */
         }
 
         /* Reset universal: elimina márgenes/padding del navegador
@@ -68,10 +81,14 @@
         html {
             width: 100%;
             height: 100%;
-            font-family: 'DM Sans', sans-serif; /* Fuente principal DM Sans */
-            background-color: var(--bg-color);  /* Fondo oscuro: visible mientras carga la imagen */
-            color: var(--text-main);             /* Color de texto por defecto: crema */
-            overflow: hidden;                    /* Sin scroll en la vista principal */
+            font-family: 'DM Sans', sans-serif;
+            /* Fuente principal DM Sans */
+            background-color: var(--bg-color);
+            /* Fondo oscuro: visible mientras carga la imagen */
+            color: var(--text-main);
+            /* Color de texto por defecto: crema */
+            overflow: hidden;
+            /* Sin scroll en la vista principal */
         }
 
         /* =========================================
@@ -83,8 +100,10 @@
         ========================================= */
         .app-container {
             position: relative;
-            width: 100vw;   /* Ocupa todo el ancho de la ventana */
-            height: 100vh;  /* Ocupa todo el alto de la ventana */
+            width: 100vw;
+            /* Ocupa todo el ancho de la ventana */
+            height: 100vh;
+            /* Ocupa todo el alto de la ventana */
         }
 
         /* .farm-image: la imagen isométrica de la finca que actúa
@@ -99,9 +118,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* La imagen cubre el 100% sin deformarse (recorta si es necesario) */
+            object-fit: cover;
+            /* La imagen cubre el 100% sin deformarse (recorta si es necesario) */
             z-index: 1;
-            filter: brightness(0.85); /* Oscurece levemente la imagen para resaltar los elementos UI */
+            filter: brightness(0.85);
+            /* Oscurece levemente la imagen para resaltar los elementos UI */
         }
 
         /* =========================================
@@ -114,14 +135,18 @@
 
         /* Barra superior: contiene logo + instrucción táctil */
         .top-bar {
-            position: absolute; /* Flota sobre la imagen */
+            position: absolute;
+            /* Flota sobre la imagen */
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px 40px;    /* Espaciado interno: arriba/abajo 20px, lados 40px */
-            z-index: 10;           /* Por encima de la imagen */
+            padding: 20px 40px;
+            /* Espaciado interno: arriba/abajo 20px, lados 40px */
+            z-index: 10;
+            /* Por encima de la imagen */
             display: flex;
-            justify-content: space-between; /* Logo a la izquierda, instrucción a la derecha */
+            justify-content: space-between;
+            /* Logo a la izquierda, instrucción a la derecha */
             align-items: center;
             /* Gradiente de arriba hacia abajo (oscuro → transparente):
                crea la ilusión de que la barra se "desvanece" en la imagen */
@@ -136,17 +161,20 @@
 
         /* Nombre de la marca: tipografía serif para aspecto premium */
         .logo {
-            font-family: Georgia, serif; /* Fuente serif para contraste con el cuerpo sans-serif */
+            font-family: Georgia, serif;
+            /* Fuente serif para contraste con el cuerpo sans-serif */
             font-size: 28px;
             font-weight: bold;
             color: var(--text-main);
-            letter-spacing: 1px;         /* Espaciado entre letras para elegancia */
+            letter-spacing: 1px;
+            /* Espaciado entre letras para elegancia */
         }
 
         /* Subtítulo bajo el logo */
         .tagline {
             font-size: 12px;
-            color: var(--gold-innova);  /* Dorado corporativo */
+            color: var(--gold-innova);
+            /* Dorado corporativo */
             margin-top: 2px;
             letter-spacing: 0.5px;
         }
@@ -156,61 +184,82 @@
         .instruction {
             display: flex;
             align-items: center;
-            gap: 8px;                                   /* Espacio entre el ícono y el texto */
+            gap: 8px;
+            /* Espacio entre el ícono y el texto */
             font-size: 14px;
             color: var(--text-main);
-            background: rgba(45, 80, 22, 0.4);          /* Verde semitransparente */
+            background: rgba(45, 80, 22, 0.4);
+            /* Verde semitransparente */
             padding: 8px 16px;
-            border-radius: 20px;                         /* Forma de píldora */
-            border: 1px solid rgba(245, 237, 216, 0.2); /* Borde sutil crema */
+            border-radius: 20px;
+            /* Forma de píldora */
+            border: 1px solid rgba(245, 237, 216, 0.2);
+            /* Borde sutil crema */
         }
 
         /* Animación de parpadeo aplicada al ícono de la instrucción */
         .cursor-blink {
-            animation: blink 1.5s infinite; /* Parpadea cada 1.5s, en bucle infinito */
+            animation: blink 1.5s infinite;
+            /* Parpadea cada 1.5s, en bucle infinito */
         }
 
         /* Keyframes del parpadeo: va de opacidad 1 → 0.3 → 1 */
         @keyframes blink {
+
             0%,
             100% {
-                opacity: 1;    /* Completamente visible al inicio y fin */
+                opacity: 1;
+                /* Completamente visible al inicio y fin */
             }
 
             50% {
-                opacity: 0.3;  /* Semi-transparente a la mitad del ciclo */
+                opacity: 0.3;
+                /* Semi-transparente a la mitad del ciclo */
             }
         }
 
         /* Barra inferior: contiene las "pills" de navegación por zona */
         .bottom-bar {
-            position: absolute; /* Flota sobre la imagen */
-            bottom: 30px;       /* 30px desde el borde inferior */
+            position: absolute;
+            /* Flota sobre la imagen */
+            bottom: 30px;
+            /* 30px desde el borde inferior */
             left: 0;
             width: 100%;
-            z-index: 10;         /* Por encima de la imagen */
+            z-index: 10;
+            /* Por encima de la imagen */
             display: flex;
-            justify-content: center; /* Pilla centradas horizontalmente */
-            gap: 15px;               /* Espacio entre cada pill */
-            flex-wrap: wrap;         /* En pantallas pequeñas, las pills saltan a la siguiente fila */
+            justify-content: center;
+            /* Pilla centradas horizontalmente */
+            gap: 15px;
+            /* Espacio entre cada pill */
+            flex-wrap: wrap;
+            /* En pantallas pequeñas, las pills saltan a la siguiente fila */
             padding: 0 20px;
         }
 
         /* Píldora de navegación individual (un botón por zona) */
         .nav-pill {
             padding: 10px 20px;
-            border-radius: 30px;           /* Muy redondeado = forma de cápsula/pill */
+            border-radius: 30px;
+            /* Muy redondeado = forma de cápsula/pill */
             font-size: 13px;
             font-weight: 700;
-            cursor: pointer;               /* Cambia el cursor a manito al pasar */
-            border: 2px solid transparent; /* El color de borde se asigna en línea (style="") en el HTML */
-            background: rgba(7, 18, 9, 0.7); /* Fondo oscuro semitransparente */
+            cursor: pointer;
+            /* Cambia el cursor a manito al pasar */
+            border: 2px solid transparent;
+            /* El color de borde se asigna en línea (style="") en el HTML */
+            background: rgba(7, 18, 9, 0.7);
+            /* Fondo oscuro semitransparente */
             color: var(--text-main);
-            backdrop-filter: blur(4px);    /* Efecto de cristal esmerilado detrás de la pill */
-            transition: all 0.3s ease;     /* Anima todos los cambios CSS suavemente */
+            backdrop-filter: blur(4px);
+            /* Efecto de cristal esmerilado detrás de la pill */
+            transition: all 0.3s ease;
+            /* Anima todos los cambios CSS suavemente */
             display: flex;
             align-items: center;
-            gap: 8px;                      /* Espacio entre el emoji y el texto */
+            gap: 8px;
+            /* Espacio entre el emoji y el texto */
         }
 
         /* Al pasar el ratón: la pill sube 3px (efecto hover lift) */
@@ -237,10 +286,13 @@
            transform:translate(-50%,-50%) centra el punto exactamente
            en las coordenadas indicadas. */
         .hotspot {
-            position: absolute; /* Posición relativa al .app-container */
-            z-index: 20;        /* Por encima de barras (z:10) y de la imagen (z:1) */
+            position: absolute;
+            /* Posición relativa al .app-container */
+            z-index: 20;
+            /* Por encima de barras (z:10) y de la imagen (z:1) */
             cursor: pointer;
-            transform: translate(-50%, -50%); /* Centra el hotspot exacto en top/left */
+            transform: translate(-50%, -50%);
+            /* Centra el hotspot exacto en top/left */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -250,13 +302,19 @@
         .hotspot-core {
             width: 24px;
             height: 24px;
-            border-radius: 50%;                        /* Hace el div circular */
-            background-color: var(--current-color);    /* Color de zona (asignado por ID más abajo) */
-            border: 3px solid #FFF;                    /* Borde blanco para visibilidad */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  /* Sombra para profundidad */
+            border-radius: 50%;
+            /* Hace el div circular */
+            background-color: var(--current-color);
+            /* Color de zona (asignado por ID más abajo) */
+            border: 3px solid #FFF;
+            /* Borde blanco para visibilidad */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Sombra para profundidad */
             position: relative;
-            z-index: 2;                                /* El core va encima del pulse */
-            transition: transform 0.2s ease;           /* Transición suave para el hover */
+            z-index: 2;
+            /* El core va encima del pulse */
+            transition: transform 0.2s ease;
+            /* Transición suave para el hover */
         }
 
         /* Anillo de onda pulsante: un círculo transparente que crece
@@ -267,26 +325,35 @@
             left: 50%;
             width: 100%;
             height: 100%;
-            background-color: transparent;          /* Sin relleno, solo borde */
-            border: 2px solid var(--current-color); /* Borde del color de zona */
+            background-color: transparent;
+            /* Sin relleno, solo borde */
+            border: 2px solid var(--current-color);
+            /* Borde del color de zona */
             border-radius: 50%;
-            transform: translate(-50%, -50%);       /* Centra sobre el core */
-            animation: pulse-animation 2s infinite; /* Pulsa en bucle de 2 segundos */
-            z-index: 1;                             /* Detrás del core */
+            transform: translate(-50%, -50%);
+            /* Centra sobre el core */
+            animation: pulse-animation 2s infinite;
+            /* Pulsa en bucle de 2 segundos */
+            z-index: 1;
+            /* Detrás del core */
         }
 
         /* Animación del pulse: expande de 24px → 70px y se desvanece */
         @keyframes pulse-animation {
             0% {
-                width: 24px;   /* Empieza del mismo tamaño que el core */
+                width: 24px;
+                /* Empieza del mismo tamaño que el core */
                 height: 24px;
-                opacity: 1;    /* Completamente visible */
+                opacity: 1;
+                /* Completamente visible */
             }
 
             100% {
-                width: 70px;   /* Crece hasta 70px (casi 3x el tamaño original) */
+                width: 70px;
+                /* Crece hasta 70px (casi 3x el tamaño original) */
                 height: 70px;
-                opacity: 0;    /* Se desvanece completamente */
+                opacity: 0;
+                /* Se desvanece completamente */
             }
         }
 
@@ -296,20 +363,28 @@
            Al hacer hover, sube a su posición y se vuelve visible. */
         .hotspot-tooltip {
             position: absolute;
-            bottom: 140%;                          /* Se posiciona encima del hotspot */
+            bottom: 140%;
+            /* Se posiciona encima del hotspot */
             left: 50%;
-            transform: translateX(-50%) translateY(10px); /* Centrado y ligeramente bajado */
-            background: rgba(7, 18, 9, 0.9);       /* Fondo oscuro casi opaco */
+            transform: translateX(-50%) translateY(10px);
+            /* Centrado y ligeramente bajado */
+            background: rgba(7, 18, 9, 0.9);
+            /* Fondo oscuro casi opaco */
             color: var(--text-main);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 700;
-            white-space: nowrap;                   /* Evita que el texto salte de línea */
-            opacity: 0;                            /* Invisible por defecto */
-            pointer-events: none;                  /* No bloquea clicks mientras está oculto */
-            transition: all 0.3s ease;             /* Transición suave de aparición */
-            border: 1px solid var(--current-color);/* Borde del color de zona */
+            white-space: nowrap;
+            /* Evita que el texto salte de línea */
+            opacity: 0;
+            /* Invisible por defecto */
+            pointer-events: none;
+            /* No bloquea clicks mientras está oculto */
+            transition: all 0.3s ease;
+            /* Transición suave de aparición */
+            border: 1px solid var(--current-color);
+            /* Borde del color de zona */
         }
 
         /* Al hover: el core del hotspot escala un 20% (se agranda) */
@@ -320,7 +395,8 @@
         /* Al hover: el tooltip sube a su posición final y se hace visible */
         .hotspot:hover .hotspot-tooltip {
             opacity: 1;
-            transform: translateX(-50%) translateY(0); /* Sube 10px a su posición correcta */
+            transform: translateX(-50%) translateY(0);
+            /* Sube 10px a su posición correcta */
         }
 
         /* ── Asignación de color por zona ──────────────────────────────
@@ -330,19 +406,23 @@
            Esta es una técnica de CSS Custom Properties en cascada.
         ─────────────────────────────────────────────────────────────── */
         #hs-gateway {
-            --current-color: var(--z1-color); /* Turquesa para Gateway */
+            --current-color: var(--z1-color);
+            /* Turquesa para Gateway */
         }
 
         #hs-marquesina {
-            --current-color: var(--z2-color); /* Dorado para Secafé */
+            --current-color: var(--z2-color);
+            /* Dorado para Secafé */
         }
 
         #hs-clima {
-            --current-color: var(--z3-color); /* Verde para Clima */
+            --current-color: var(--z3-color);
+            /* Verde para Clima */
         }
 
         #hs-beneficio {
-            --current-color: var(--z4-color); /* Rojo para Beneficio */
+            --current-color: var(--z4-color);
+            /* Rojo para Beneficio */
         }
 
         /* =========================================
@@ -361,49 +441,67 @@
 
         /* Overlay semitransparente que oscurece el fondo cuando el panel está abierto */
         .side-panel-overlay {
-            position: fixed;   /* fixed: cubre toda la ventana sin importar el scroll */
+            position: fixed;
+            /* fixed: cubre toda la ventana sin importar el scroll */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Negro al 40% de opacidad */
-            z-index: 90;                     /* Debajo del panel (z:100), encima de todo lo demás */
-            opacity: 0;                      /* Invisible por defecto */
-            pointer-events: none;            /* No bloquea interacciones cuando está oculto */
-            transition: opacity 0.4s ease;   /* Aparece/desaparece suavemente */
+            background: rgba(0, 0, 0, 0.4);
+            /* Negro al 40% de opacidad */
+            z-index: 90;
+            /* Debajo del panel (z:100), encima de todo lo demás */
+            opacity: 0;
+            /* Invisible por defecto */
+            pointer-events: none;
+            /* No bloquea interacciones cuando está oculto */
+            transition: opacity 0.4s ease;
+            /* Aparece/desaparece suavemente */
         }
 
         /* Cuando el overlay tiene clase .active (añadida por JS): se muestra */
         .side-panel-overlay.active {
             opacity: 1;
-            pointer-events: all; /* Permite capturar clics (para cerrar el panel) */
+            pointer-events: all;
+            /* Permite capturar clics (para cerrar el panel) */
         }
 
         /* El panel lateral en sí */
         .side-panel {
-            position: fixed;    /* fixed: se queda en el borde derecho de la ventana */
+            position: fixed;
+            /* fixed: se queda en el borde derecho de la ventana */
             top: 0;
             right: 0;
-            width: 420px;       /* Ancho del panel. Editar aquí para hacerlo más angosto o ancho */
-            max-width: 100vw;   /* En móvil, nunca más ancho que la pantalla */
+            width: 420px;
+            /* Ancho del panel. Editar aquí para hacerlo más angosto o ancho */
+            max-width: 100vw;
+            /* En móvil, nunca más ancho que la pantalla */
             height: 100%;
-            background: rgba(7, 18, 9, 0.97); /* Verde muy oscuro casi opaco */
-            backdrop-filter: blur(10px);       /* Desenfoque del fondo detrás del panel */
-            z-index: 100;                      /* El más alto: siempre al frente */
-            transform: translateX(100%);       /* Empieza oculto a la derecha (fuera de pantalla) */
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Animación de deslizamiento "spring" */
-            overflow-y: auto;                  /* Scroll vertical si el contenido es muy largo */
+            background: rgba(7, 18, 9, 0.97);
+            /* Verde muy oscuro casi opaco */
+            backdrop-filter: blur(10px);
+            /* Desenfoque del fondo detrás del panel */
+            z-index: 100;
+            /* El más alto: siempre al frente */
+            transform: translateX(100%);
+            /* Empieza oculto a la derecha (fuera de pantalla) */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Animación de deslizamiento "spring" */
+            overflow-y: auto;
+            /* Scroll vertical si el contenido es muy largo */
             /* El color del borde izquierdo se asigna dinámicamente por JS
                usando la variable --panel-color (el color de la zona seleccionada) */
             border-left: 4px solid var(--panel-color, var(--text-main));
             display: flex;
             flex-direction: column;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); /* Sombra a la izquierda del panel */
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            /* Sombra a la izquierda del panel */
         }
 
         /* Cuando el panel tiene clase .open (añadida por JS): desliza a la vista */
         .side-panel.open {
-            transform: translateX(0); /* Vuelve a su posición normal (visible) */
+            transform: translateX(0);
+            /* Vuelve a su posición normal (visible) */
         }
 
         /* Botón de cierre (✕) en la esquina superior derecha del panel */
@@ -413,7 +511,8 @@
             right: 20px;
             background: transparent;
             border: none;
-            color: var(--text-sec);  /* Gris café por defecto */
+            color: var(--text-sec);
+            /* Gris café por defecto */
             font-size: 24px;
             cursor: pointer;
             transition: color 0.2s;
@@ -426,7 +525,8 @@
 
         /* Área de contenido del panel con padding interno */
         .panel-content {
-            padding: 40px 30px; /* Margen interno del contenido: 40px arriba/abajo, 30px lados */
+            padding: 40px 30px;
+            /* Margen interno del contenido: 40px arriba/abajo, 30px lados */
         }
 
         /* ── Estructura Interna del Panel ──────────────────────────────
@@ -442,23 +542,27 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 25px; /* Espacio bajo la cabecera antes del primer section */
+            margin-bottom: 25px;
+            /* Espacio bajo la cabecera antes del primer section */
         }
 
         /* El emoji grande (48px) que representa cada zona */
         .panel-icon {
             font-size: 48px;
-            line-height: 1; /* Evita espacio extra bajo el emoji */
+            line-height: 1;
+            /* Evita espacio extra bajo el emoji */
         }
 
         /* Contenedor de título y subtítulo (ocupa el espacio restante) */
         .panel-titles {
-            flex: 1; /* Ocupa todo el ancho disponible junto al ícono */
+            flex: 1;
+            /* Ocupa todo el ancho disponible junto al ícono */
         }
 
         /* Título principal de cada sección del panel */
         .panel-title {
-            font-family: Georgia, serif; /* Serif para elegancia */
+            font-family: Georgia, serif;
+            /* Serif para elegancia */
             font-size: 24px;
             font-weight: bold;
             color: var(--text-main);
@@ -469,44 +573,53 @@
         /* Subtítulo descriptivo bajo el título */
         .panel-subtitle {
             font-size: 14px;
-            color: var(--panel-color); /* Hereda el color de zona del panel */
+            color: var(--panel-color);
+            /* Hereda el color de zona del panel */
             font-weight: 500;
         }
 
         /* Contenedor de cada sección de información dentro del panel */
         .panel-section {
-            margin-bottom: 25px; /* Espacio entre secciones */
+            margin-bottom: 25px;
+            /* Espacio entre secciones */
         }
 
         /* Etiqueta pequeña en mayúsculas sobre cada sección (ej: "¿QUÉ HACE?") */
         .section-label {
             font-size: 9px;
-            letter-spacing: 2.5px;        /* Espaciado amplio: estilo "ALLCAPS" editorial */
+            letter-spacing: 2.5px;
+            /* Espaciado amplio: estilo "ALLCAPS" editorial */
             text-transform: uppercase;
-            color: var(--panel-color);     /* Color de zona */
+            color: var(--panel-color);
+            /* Color de zona */
             margin-bottom: 10px;
             font-weight: 700;
-            border-bottom: 1px solid rgba(138, 122, 106, 0.2); /* Línea separadora muy sutil */
+            border-bottom: 1px solid rgba(138, 122, 106, 0.2);
+            /* Línea separadora muy sutil */
             padding-bottom: 4px;
         }
 
         /* Texto de párrafo en las secciones: color ligeramente más tenue que el texto principal */
         .section-text {
             font-size: 14px;
-            line-height: 1.6;   /* Interlineado 1.6 para buena legibilidad */
-            color: #CFC5B3;     /* Crema más tenue que --text-main */
+            line-height: 1.6;
+            /* Interlineado 1.6 para buena legibilidad */
+            color: #CFC5B3;
+            /* Crema más tenue que --text-main */
         }
 
         /* Lista de ítems usada para enumerar variables, equipos, etc. */
         .panel-list {
-            list-style: none; /* Elimina los bullets por defecto del navegador */
+            list-style: none;
+            /* Elimina los bullets por defecto del navegador */
             margin-top: 8px;
         }
 
         /* Cada ítem de la lista */
         .panel-list li {
             position: relative;
-            padding-left: 15px;  /* Espacio para el bullet personalizado */
+            padding-left: 15px;
+            /* Espacio para el bullet personalizado */
             margin-bottom: 6px;
             font-size: 14px;
             color: #CFC5B3;
@@ -515,11 +628,13 @@
 
         /* Bullet personalizado "›" usando pseudo-elemento ::before */
         .panel-list li::before {
-            content: "›";             /* Carácter decorativo en lugar del bullet */
+            content: "›";
+            /* Carácter decorativo en lugar del bullet */
             position: absolute;
             left: 0;
             top: 0;
-            color: var(--panel-color); /* Color de zona para el bullet */
+            color: var(--panel-color);
+            /* Color de zona para el bullet */
             font-weight: bold;
         }
 
@@ -527,10 +642,13 @@
 
         /* Caja de "Valor para el proceso": lista de beneficios con borde verde a la izquierda */
         .value-box {
-            background: rgba(255, 255, 255, 0.04); /* Relleno blanco muy sutil */
-            border-left: 3px solid var(--green-innova); /* Borde verde corporativo */
+            background: rgba(255, 255, 255, 0.04);
+            /* Relleno blanco muy sutil */
+            border-left: 3px solid var(--green-innova);
+            /* Borde verde corporativo */
             padding: 15px;
-            border-radius: 0 8px 8px 0; /* Redondeo solo en las esquinas derechas */
+            border-radius: 0 8px 8px 0;
+            /* Redondeo solo en las esquinas derechas */
             margin-top: 15px;
         }
 
@@ -566,19 +684,23 @@
         ========================================= */
         @media (max-width: 768px) {
             .instruction {
-                display: none; /* Ocultar hint "toca cada zona" en móvil (ahorrar espacio) */
+                display: none;
+                /* Ocultar hint "toca cada zona" en móvil (ahorrar espacio) */
             }
 
             .side-panel {
-                width: 100vw; /* En móvil el panel ocupa toda la pantalla */
+                width: 100vw;
+                /* En móvil el panel ocupa toda la pantalla */
             }
 
             .bottom-bar {
-                bottom: 15px; /* La barra inferior sube de 30px a 15px en móvil */
+                bottom: 15px;
+                /* La barra inferior sube de 30px a 15px en móvil */
             }
 
             .nav-pill {
-                padding: 8px 12px; /* Pills más compactas en móvil */
+                padding: 8px 12px;
+                /* Pills más compactas en móvil */
                 font-size: 11px;
             }
         }
@@ -595,7 +717,8 @@
              El src se puede definir aquí directamente o via JS.
              alt: texto alternativo de accesibilidad.
         ══════════════════════════════════════════════════ -->
-        <img id="main-farm-image" class="farm-image" src="Ecosistema beneficio cafe IoT.png" alt="Finca Cafetera Isometrica">
+        <img id="main-farm-image" class="farm-image" src="Ecosistema beneficio cafe IoT.png"
+            alt="Finca Cafetera Isometrica">
 
         <!-- ══════════════════════════════════════════════════
              BARRA SUPERIOR
@@ -627,8 +750,8 @@
 
         <!-- Hotspot 1: Gateway LoRaWAN (esquina superior izquierda aprox.) -->
         <div class="hotspot" id="hs-gateway" style="top: 15%; left: 18%;" onclick="openPanel('gateway')">
-            <div class="hotspot-pulse"></div>   <!-- Onda expansiva animada -->
-            <div class="hotspot-core"></div>    <!-- Punto central sólido -->
+            <div class="hotspot-pulse"></div> <!-- Onda expansiva animada -->
+            <div class="hotspot-core"></div> <!-- Punto central sólido -->
             <div class="hotspot-tooltip">Gateway Central</div> <!-- Etiqueta de hover -->
         </div>
 
