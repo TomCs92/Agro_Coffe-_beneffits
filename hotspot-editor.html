@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Hotspots — InnovaKit</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:    #080e0a;
+            --panel: #0e1810;
+            --card:  #131f16;
+            --line:  rgba(255,255,255,0.07);
+            --text:  #e8ece9;
+            --muted: #607066;
+            --green: #4ade80;
+            --c1: #26C6DA;
+            --c2: #F4B41A;
+            --c3: #E53935;
+            --c4: #4CAF50;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+        /* ── Layout principal ──────────────────────────────── */
+        .shell {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            grid-template-rows: 52px 1fr;
+            height: 100vh;
+        }
+
+        /* ── Top bar ────────────────────────────────────────── */
+        .topbar {
+            grid-column: 1 / -1;
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+            display: flex; align-items: center;
+            padding: 0 20px; gap: 16px;
+        }
+        .topbar-logo {
+            font-size: 14px; font-weight: 600; color: var(--green);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .topbar-logo span { color: var(--muted); font-weight: 400; }
+        .topbar-badge {
+            font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+            background: rgba(74,222,128,0.1); color: var(--green);
+            border: 1px solid rgba(74,222,128,0.2);
+            padding: 3px 10px; border-radius: 20px;
+        }
+        .topbar-hint {
+            margin-left: auto;
+            font-size: 11px; color: var(--muted);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .topbar-hint i { color: var(--green); }
+
+        /* ── Sidebar ────────────────────────────────────────── */
+        .sidebar {
+            background: var(--panel);
+            border-right: 1px solid var(--line);
+            overflow-y: auto;
+            display: flex; flex-direction: column;
+            padding: 0;
+        }
+
+        .sb-section { padding: 18px 18px 0; }
+        .sb-title {
+            font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--muted); font-weight: 600; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .sb-title::after { content:''; flex:1; height:1px; background: var(--line); }
+
+        /* Selector de imagen */
+        .img-drop {
+            border: 1.5px dashed var(--line);
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+            margin-bottom: 16px;
+        }
+        .img-drop:hover { border-color: var(--green); background: rgba(74,222,128,0.04); }
+        .img-drop i { font-size: 24px; color: var(--muted); margin-bottom: 8px; display: block; }
+        .img-drop p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+        .img-drop strong { color: var(--text); }
+        #img-file { display: none; }
+
+        /* Info de imagen cargada */
+        .img-info {
+            background: var(--card); border-radius: 8px;
+            padding: 10px 12px; margin-bottom: 16px;
+            font-size: 11px; color: var(--muted);
+            display: none; /* mostrar via JS */
+        }
+        .img-info .info-row { display: flex; justify-content: space-between; padding: 3px 0; }
+        .img-info .info-val { color: var(--text); font-family: 'DM Mono', monospace; }
+
+        /* Lista de hotspots */
+        .hs-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+        .hs-item {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--hs-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+            user-select: none;
+        }
+        .hs-item.active {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.15);
+            border-left-color: var(--hs-color);
+        }
+        .hs-item-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .hs-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--hs-color); flex-shrink: 0; }
+        .hs-name { font-size: 12px; font-weight: 600; }
+        .hs-id   { font-size: 10px; color: var(--muted); margin-left: auto; font-family: 'DM Mono', monospace; }
+
+        .hs-coords {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+        }
+        .coord-box { background: var(--bg); border-radius: 6px; padding: 6px 8px; }
+        .coord-lbl { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+        .coord-val { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
+
+        /* Botón exportar */
+        .export-btn {
+            margin: 0 18px 18px;
+            background: var(--green);
+            color: #020f05;
+            border: none; border-radius: 8px;
+            padding: 11px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px; font-weight: 600;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: opacity .2s, transform .15s;
+        }
+        .export-btn:hover { opacity: .88; transform: translateY(-1px); }
+        .export-btn:active { transform: translateY(0); }
+
+        /* Código exportado */
+        .code-block {
+            margin: 0 18px 18px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10.5px;
+            color: #a8e6c0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+            display: none;
+            position: relative;
+        }
+        .copy-mini {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(255,255,255,0.08);
+            border: none; border-radius: 5px;
+            color: var(--muted); font-size: 11px;
+            padding: 4px 8px; cursor: pointer;
+            transition: color .2s, background .2s;
+        }
+        .copy-mini:hover { color: var(--text); background: rgba(255,255,255,0.12); }
+
+        /* ── Canvas / imagen central ────────────────────────── */
+        .canvas-area {
+            position: relative; overflow: hidden;
+            background: repeating-conic-gradient(rgba(255,255,255,0.02) 0% 25%, transparent 0% 50%)
+                         0 0 / 24px 24px;
+            cursor: crosshair;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        #farm-img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; display: block;
+            user-select: none; -webkit-user-drag: none;
+            pointer-events: none;
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 14px; text-align: center;
+            pointer-events: none;
+        }
+        .empty-state i { font-size: 40px; color: rgba(255,255,255,0.1); }
+        .empty-state p { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 260px; }
+
+        /* Coordenada flotante durante el drag */
+        #coord-tooltip {
+            position: absolute; z-index: 200;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px; padding: 5px 10px;
+            font-family: 'DM Mono', monospace; font-size: 11px; color: #fff;
+            pointer-events: none;
+            display: none;
+            white-space: nowrap;
+        }
+
+        /* Overlay del área de imagen para eventos */
+        #img-overlay {
+            position: absolute;
+            pointer-events: all;
+        }
+
+        /* Hotspot en el editor */
+        .hs-editor-pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            z-index: 50;
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hs-editor-pin:active { cursor: grabbing; }
+
+        .pin-ring {
+            position: absolute;
+            width: 22px; height: 22px;
+            border: 2px solid var(--pin-color);
+            border-radius: 50%;
+            transition: width .2s, height .2s;
+        }
+        .hs-editor-pin:hover .pin-ring { width: 30px; height: 30px; }
+
+        .pin-core {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--pin-color);
+            border: 2px solid #fff;
+            box-shadow: 0 0 10px var(--pin-color);
+            position: relative; z-index: 1;
+        }
+
+        .pin-label {
+            position: absolute;
+            top: -22px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--pin-color);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 9px; font-weight: 600;
+            color: #fff; white-space: nowrap;
+            pointer-events: none;
+        }
+
+        /* Toast de notificación */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+            background: var(--green); color: #020f05;
+            padding: 10px 18px; border-radius: 8px;
+            font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            transform: translateY(20px); opacity: 0;
+            transition: all .3s;
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-logo">
+            <i class="fa-solid fa-crosshairs"></i>
+            Editor de Hotspots <span>— InnovaKit</span>
+        </div>
+        <div class="topbar-badge">Herramienta de desarrollo</div>
+        <div class="topbar-hint">
+            <i class="fa-solid fa-circle-info"></i>
+            Arrastra los puntos sobre la imagen · Las coordenadas se actualizan en tiempo real
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <!-- Carga de imagen -->
+        <div class="sb-section" style="padding-top:20px">
+            <div class="sb-title">Imagen de la finca</div>
+            <div class="img-drop" onclick="document.getElementById('img-file').click()">
+                <i class="fa-solid fa-image"></i>
+                <p><strong>Cargar imagen</strong><br>finca-isometrica.jpg<br>o haz clic para seleccionar</p>
+            </div>
+            <input type="file" id="img-file" accept="image/*" onchange="loadImage(this)">
+            <div class="img-info" id="img-info">
+                <div class="info-row"><span>Archivo</span><span class="info-val" id="info-name">—</span></div>
+                <div class="info-row"><span>Dimensiones</span><span class="info-val" id="info-size">—</span></div>
+                <div class="info-row"><span>Ratio</span><span class="info-val" id="info-ratio">—</span></div>
+            </div>
+        </div>
+
+        <!-- Lista de hotspots -->
+        <div class="sb-section">
+            <div class="sb-title">Puntos de interés</div>
+            <div class="hs-list" id="hs-list"></div>
+        </div>
+
+        <!-- Exportar -->
+        <div style="padding: 0 18px 8px; margin-top: auto;">
+            <div class="sb-title">Exportar coordenadas</div>
+        </div>
+        <button class="export-btn" onclick="exportCode()">
+            <i class="fa-solid fa-code"></i> Generar código HTML
+        </button>
+        <div class="code-block" id="code-output">
+            <button class="copy-mini" onclick="copyCode()"><i class="fa-solid fa-copy"></i> Copiar</button>
+            <span id="code-text"></span>
+        </div>
+
+    </div><!-- /sidebar -->
+
+    <!-- ÁREA DE EDICIÓN VISUAL -->
+    <div class="canvas-area" id="canvas-area">
+
+        <div class="empty-state" id="empty-state">
+            <i class="fa-solid fa-map"></i>
+            <p>Carga tu imagen <strong>finca-isometrica.jpg</strong> para comenzar a posicionar los hotspots</p>
+        </div>
+
+        <img id="farm-img" src="" alt="" style="display:none">
+
+        <!-- Overlay transparente del área de imagen (recibe clics) -->
+        <div id="img-overlay"></div>
+
+        <!-- Tooltip de coordenadas -->
+        <div id="coord-tooltip"></div>
+
+    </div>
+
+</div><!-- /shell -->
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fa-solid fa-check"></i> <span id="toast-msg"></span></div>
+
+<script>
+/* ================================================================
+   DEFINICIÓN DE HOTSPOTS — edita nombres, ids y colores aquí
+   ================================================================ */
+const HOTSPOTS = [
+    { id: 'gateway',    name: 'Gateway / La Finca', color: '#26C6DA', relTop: 16, relLeft: 31 },
+    { id: 'marquesina', name: 'Marquesina',          color: '#F4B41A', relTop: 58, relLeft: 24 },
+    { id: 'beneficio',  name: 'Beneficio',            color: '#E53935', relTop: 54, relLeft: 72 },
+    { id: 'clima',      name: 'Estación Clima',       color: '#4CAF50', relTop: 34, relLeft: 55 },
+];
+
+let selectedId = null;
+let imgBounds  = { x:0, y:0, w:0, h:0 }; // área renderizada de la imagen en el canvas
+
+const farmImg    = document.getElementById('farm-img');
+const overlay    = document.getElementById('img-overlay');
+const tooltip    = document.getElementById('coord-tooltip');
+const canvasArea = document.getElementById('canvas-area');
+const emptyState = document.getElementById('empty-state');
+
+/* ── Carga de imagen ──────────────────────────────────────────── */
+function loadImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    farmImg.src = url;
+    farmImg.style.display = 'block';
+    emptyState.style.display = 'none';
+
+    farmImg.onload = () => {
+        // Info
+        document.getElementById('img-info').style.display = 'block';
+        document.getElementById('info-name').textContent = file.name;
+        document.getElementById('info-size').textContent = `${farmImg.naturalWidth} × ${farmImg.naturalHeight} px`;
+        const gcd = (a,b) => b ? gcd(b, a%b) : a;
+        const g = gcd(farmImg.naturalWidth, farmImg.naturalHeight);
+        document.getElementById('info-ratio').textContent =
+            `${farmImg.naturalWidth/g} : ${farmImg.naturalHeight/g}`;
+
+        updateAll();
+    };
+}
+
+/* ── Calcular área renderizada de la imagen ───────────────────── */
+function calcImgBounds() {
+    if (!farmImg.naturalWidth) return;
+    const ca  = canvasArea.getBoundingClientRect();
+    const iW  = farmImg.naturalWidth;
+    const iH  = farmImg.naturalHeight;
+    const caW = ca.width;
+    const caH = ca.height;
+
+    const caRatio = caW / caH;
+    const iRatio  = iW / iH;
+    let rW, rH, ox, oy;
+
+    if (iRatio > caRatio) {
+        rW = caW; rH = caW / iRatio;
+        ox = 0;   oy = (caH - rH) / 2;
+    } else {
+        rH = caH; rW = caH * iRatio;
+        oy = 0;   ox = (caW - rW) / 2;
+    }
+
+    imgBounds = { x: ox, y: oy, w: rW, h: rH };
+
+    // Posicionar y dimensionar el overlay coincidiendo con la imagen
+    overlay.style.left   = ox + 'px';
+    overlay.style.top    = oy + 'px';
+    overlay.style.width  = rW + 'px';
+    overlay.style.height = rH + 'px';
+}
+
+/* ── Render de todos los pins ─────────────────────────────────── */
+function renderPins() {
+    // Eliminar pins existentes
+    document.querySelectorAll('.hs-editor-pin').forEach(p => p.remove());
+
+    if (!farmImg.naturalWidth) return;
+
+    HOTSPOTS.forEach(hs => {
+        const pxLeft = imgBounds.x + (hs.relLeft / 100) * imgBounds.w;
+        const pxTop  = imgBounds.y + (hs.relTop  / 100) * imgBounds.h;
+
+        const pin = document.createElement('div');
+        pin.className = 'hs-editor-pin';
+        pin.id = 'pin-' + hs.id;
+        pin.style.cssText = `left:${pxLeft}px; top:${pxTop}px; --pin-color:${hs.color};`;
+        pin.innerHTML = `
+            <div class="pin-ring"></div>
+            <div class="pin-core"></div>
+            <div class="pin-label">${hs.name}</div>
+        `;
+
+        // Seleccionar al hacer clic
+        pin.addEventListener('mousedown', e => {
+            e.stopPropagation();
+            selectHotspot(hs.id);
+            startDrag(e, hs, pin);
+        });
+
+        canvasArea.appendChild(pin);
+    });
+}
+
+/* ── Selección de hotspot ─────────────────────────────────────── */
+function selectHotspot(id) {
+    selectedId = id;
+    document.querySelectorAll('.hs-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.id === id);
+    });
+}
+
+/* ── Render de sidebar ────────────────────────────────────────── */
+function renderSidebar() {
+    const list = document.getElementById('hs-list');
+    list.innerHTML = HOTSPOTS.map(hs => `
+        <div class="hs-item ${selectedId === hs.id ? 'active' : ''}"
+             style="--hs-color:${hs.color}"
+             data-id="${hs.id}"
+             onclick="selectHotspot('${hs.id}'); renderPins()">
+            <div class="hs-item-top">
+                <div class="hs-dot"></div>
+                <div class="hs-name">${hs.name}</div>
+                <div class="hs-id">#${hs.id}</div>
+            </div>
+            <div class="hs-coords">
+                <div class="coord-box">
+                    <div class="coord-lbl">Top (↕)</div>
+                    <div class="coord-val" id="val-top-${hs.id}">${hs.relTop.toFixed(2)}%</div>
+                </div>
+                <div class="coord-box">
+                    <div class="coord-lbl">Left (↔)</div>
+                    <div class="coord-val" id="val-left-${hs.id}">${hs.relLeft.toFixed(2)}%</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ── Drag & Drop de pins ──────────────────────────────────────── */
+function startDrag(e, hs, pin) {
+    e.preventDefault();
+    const canvasRect = canvasArea.getBoundingClientRect();
+
+    tooltip.style.display = 'block';
+
+    function onMove(ev) {
+        const clientX = ev.clientX ?? ev.touches?.[0].clientX;
+        const clientY = ev.clientY ?? ev.touches?.[0].clientY;
+
+        // Posición relativa al canvas
+        let cx = clientX - canvasRect.left;
+        let cy = clientY - canvasRect.top;
+
+        // Clamp dentro del área de imagen
+        cx = Math.max(imgBounds.x, Math.min(imgBounds.x + imgBounds.w, cx));
+        cy = Math.max(imgBounds.y, Math.min(imgBounds.y + imgBounds.h, cy));
+
+        // Actualizar posición del pin
+        pin.style.left = cx + 'px';
+        pin.style.top  = cy + 'px';
+
+        // Calcular % relativos al área de la imagen
+        const relLeft = ((cx - imgBounds.x) / imgBounds.w) * 100;
+        const relTop  = ((cy - imgBounds.y) / imgBounds.h) * 100;
+
+        hs.relLeft = relLeft;
+        hs.relTop  = relTop;
+
+        // Actualizar sidebar
+        const elTop  = document.getElementById('val-top-'  + hs.id);
+        const elLeft = document.getElementById('val-left-' + hs.id);
+        if (elTop)  elTop.textContent  = relTop.toFixed(2)  + '%';
+        if (elLeft) elLeft.textContent = relLeft.toFixed(2) + '%';
+
+        // Tooltip
+        tooltip.style.left = (cx + 16) + 'px';
+        tooltip.style.top  = (cy - 28) + 'px';
+        tooltip.textContent = `top: ${relTop.toFixed(2)}% · left: ${relLeft.toFixed(2)}%`;
+    }
+
+    function onUp() {
+        tooltip.style.display = 'none';
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup',   onUp);
+    }
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup',   onUp);
+}
+
+/* ── Exportar código HTML ─────────────────────────────────────── */
+function exportCode() {
+    const lines = HOTSPOTS.map(hs =>
+        `<div class="hotspot" id="hs-${hs.id}"\n` +
+        `     data-zone="${hs.id}"\n` +
+        `     data-rel-top="${hs.relTop.toFixed(2)}"\n` +
+        `     data-rel-left="${hs.relLeft.toFixed(2)}"\n` +
+        `     onclick="openPopup('${hs.id}',event)">\n` +
+        `    <div class="hs-pulse"></div>\n` +
+        `    <div class="hs-ring"></div>\n` +
+        `    <div class="hs-core"></div>\n` +
+        `</div>`
+    ).join('\n\n');
+
+    const block = document.getElementById('code-output');
+    document.getElementById('code-text').textContent = lines;
+    block.style.display = 'block';
+    showToast('Código generado. ¡Cópialo en tu index.html!');
+}
+
+function copyCode() {
+    const txt = document.getElementById('code-text').textContent;
+    navigator.clipboard.writeText(txt).then(() => showToast('Código copiado al portapapeles'));
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── Actualizar todo ──────────────────────────────────────────── */
+function updateAll() {
+    calcImgBounds();
+    renderSidebar();
+    renderPins();
+}
+
+/* ── ResizeObserver para recalcular cuando cambia el canvas ────── */
+new ResizeObserver(updateAll).observe(canvasArea);
+
+/* ── Init ──────────────────────────────────────────────────────── */
+renderSidebar();
+
+// Drag-to-load con drop en el canvas
+canvasArea.addEventListener('dragover', e => e.preventDefault());
+canvasArea.addEventListener('drop', e => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    document.getElementById('img-file').files = dt.files;
+    loadImage(document.getElementById('img-file'));
+});
+</script>
+</body>
+</html>
