@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -581,11 +581,15 @@ const DATA = {
             name: 'Gateway IoT', img: './gatewat-iot.jpg.png',
             icon: 'fa-tower-broadcast',
             title: 'Gateway IoT', sub: 'Infraestructura de comunicaciones',
-            sections: [{ label: 'Conectividad Central', html:
-                `<p class="section-text">El Gateway IoT es el cerebro de comunicaciones de la finca.
-                Recibe en tiempo real toda la información de los sensores y garantiza transmisión
-                estable hacia la nube mediante LTE/LoRa con redundancia automática.</p>`
-            }]
+            desc: 'El Gateway IoT es el cerebro de comunicaciones de la finca. Recibe en tiempo real toda la información de los sensores y garantiza transmisión estable hacia la nube mediante LTE/LoRa con redundancia automática.',
+            metrics: [
+                { icon: 'fa-signal', label: 'Señal LTE', value: '98', unit: '%', bar: 98 },
+                { icon: 'fa-wifi', label: 'Signal LoRa', value: '-78', unit: 'dBm', bar: 72 },
+                { icon: 'fa-network-wired', label: 'Conexión Nube', value: 'Activa', status: 'on' },
+                { icon: 'fa-temperature-half', label: 'Temp. Dispositivo', value: '42', unit: '°C', note: 'Óptima' },
+                { icon: 'fa-plug', label: 'Energía', value: '12.4', unit: 'V', bar: 82 },
+                { icon: 'fa-database', label: 'Almacenamiento', value: '68', unit: '%', bar: 68 }
+            ]
         }]
     },
     marquesina: {
@@ -595,21 +599,29 @@ const DATA = {
                 name: 'Secafé', img: './secafe.jpg.png',
                 icon: 'fa-scale-balanced',
                 title: 'Secafé', sub: 'Medición de humedad y peso',
-                sections: [{ label: 'Control de Baches', html:
-                    `<p class="section-text">Sistema avanzado de medición de humedad y peso
-                    diseñado para el proceso de secado del café, con mediciones segmentadas
-                    por baches y alertas automáticas al alcanzar umbrales óptimos.</p>`
-                }]
+                desc: 'Sistema avanzado de medición de humedad y peso diseñado para el proceso de secado del café. Proporciona control exacto con alertas automáticas al alcanzar umbrales óptimos.',
+                metrics: [
+                    { icon: 'fa-droplet', label: 'Humedad Relativa', value: '48', unit: '%', bar: 48 },
+                    { icon: 'fa-weight', label: 'Peso Total Bache', value: '480', unit: 'kg', note: 'Óptimo' },
+                    { icon: 'fa-hourglass-end', label: 'Tiempo Secado', value: '12h 24m', status: 'on' },
+                    { icon: 'fa-fire', label: 'Temperatura', value: '58', unit: '°C', bar: 73 },
+                    { icon: 'fa-check-circle', label: 'Estado Bache', value: 'En Curso', status: 'on' },
+                    { icon: 'fa-exclamation-triangle', label: 'Alertas', value: '0', status: 'off' }
+                ]
             },
             {
                 name: 'Sense Atmos', img: './sense-atmos.jpg.png',
                 icon: 'fa-temperature-half',
                 title: 'Sense Atmos', sub: 'Automatización de clima interior',
-                sections: [{ label: 'Control de Ventilación', html:
-                    `<p class="section-text">Sensor ambiental con control autónomo de ventilación.
-                    Enciende o apaga el extractor según temperatura y humedad interior,
-                    protegiendo el proceso de secado sin intervención manual.</p>`
-                }]
+                desc: 'Sensor ambiental con control autónomo de ventilación. Enciende/apaga el extractor según condiciones, optimizando el proceso de secado sin intervención manual.',
+                metrics: [
+                    { icon: 'fa-thermometer', label: 'Temperatura', value: '56', unit: '°C', bar: 70 },
+                    { icon: 'fa-tint', label: 'Humedad', value: '52', unit: '%', bar: 52 },
+                    { icon: 'fa-fan', label: 'Ventilador', value: 'Activo', status: 'on' },
+                    { icon: 'fa-wind', label: 'Velocidad Aire', value: '2.4', unit: 'm/s', bar: 60 },
+                    { icon: 'fa-gauge', label: 'Presión', value: '101.2', unit: 'kPa', note: 'Normal' },
+                    { icon: 'fa-clock', label: 'Ciclo Restante', value: '8h 45m', status: 'on' }
+                ]
             }
         ]
     },
@@ -620,31 +632,43 @@ const DATA = {
                 name: 'Sense Flow', img: './sense-flow.jpg.png',
                 icon: 'fa-water',
                 title: 'Sense Flow', sub: 'Caudalímetro de precisión',
-                sections: [{ label: 'Trazabilidad Hídrica', html:
-                    `<p class="section-text">Medición exacta del caudal de entrada al proceso de
-                    beneficio. Garantiza control estricto del uso de agua con registro histórico
-                    para certificaciones de sostenibilidad.</p>`
-                }]
+                desc: 'Medición exacta del caudal de entrada al proceso de beneficio. Garantiza control estricto del uso de agua con registro histórico para certificaciones de sostenibilidad.',
+                metrics: [
+                    { icon: 'fa-droplet', label: 'Caudal Actual', value: '8.5', unit: 'L/min', bar: 71 },
+                    { icon: 'fa-square', label: 'Volumen Hoy', value: '1.240', unit: 'm³', note: 'En límite' },
+                    { icon: 'fa-alert-circle', label: 'Estado Válvula', value: 'Abierta', status: 'on' },
+                    { icon: 'fa-chart-line', label: 'Flujo Promedio', value: '7.8', unit: 'L/min' },
+                    { icon: 'fa-hourglass-end', label: 'Consumo Esta Hora', value: '486', unit: 'L' },
+                    { icon: 'fa-radiation', label: 'Calidad Agua', value: 'pH 6.8', note: 'Óptima' }
+                ]
             },
             {
-                name: 'Válvula Inteligente', img: 'https://placehold.co/100x100/E53935/FFFFFF?text=Valvula',
+                name: 'Válvula Inteligente', img: 'https://placehold.co/300x175/E53935/FFFFFF?text=Válvula',
                 icon: 'fa-faucet-drip',
                 title: 'Válvula Inteligente', sub: 'Control de flujo de agua',
-                sections: [{ label: 'Interrupción de Paso', html:
-                    `<p class="section-text">Válvula automatizada interconectada al Sense Flow.
-                    Ejecuta cortes de flujo de forma remota o automática según reglas configurables
-                    desde el dashboard en la nube.</p>`
-                }]
+                desc: 'Válvula automatizada interconectada al Sense Flow. Ejecuta cortes de flujo remotamente o por reglas automáticas configurables desde la nube.',
+                metrics: [
+                    { icon: 'fa-toggle-on', label: 'Estado', value: 'Abierta', status: 'on' },
+                    { icon: 'fa-percent', label: 'Apertura', value: '94', unit: '%', bar: 94 },
+                    { icon: 'fa-bolt', label: 'Solenoide', value: 'OK', status: 'on' },
+                    { icon: 'fa-hourglass-start', label: 'Última Acción', value: '2 min', note: 'Reciente' },
+                    { icon: 'fa-signal', label: 'Conexión', value: 'Conectada', status: 'on' },
+                    { icon: 'fa-history', label: 'Ciclos Hoy', value: '23', note: 'Normal' }
+                ]
             },
             {
                 name: 'Atmos View', img: './sense-atmos-view.jpg.png',
                 icon: 'fa-display',
                 title: 'Sense Atmos View', sub: 'Monitor local de condiciones',
-                sections: [{ label: 'Visualización en Planta', html:
-                    `<p class="section-text">Sensor con pantalla integrada para lectura inmediata
-                    de temperatura y humedad en lavado y fermentación, sin necesidad de revisar
-                    el celular.</p>`
-                }]
+                desc: 'Sensor con pantalla integrada para lectura inmediata de temperatura y humedad en lavado y fermentación, sin necesidad de consultar dispositivos.',
+                metrics: [
+                    { icon: 'fa-thermometer', label: 'Temperatura', value: '28', unit: '°C', bar: 56 },
+                    { icon: 'fa-droplet', label: 'Humedad', value: '64', unit: '%', bar: 64 },
+                    { icon: 'fa-lightbulb', label: 'Pantalla', value: 'Activa', status: 'on' },
+                    { icon: 'fa-battery-three-quarters', label: 'Batería', value: '87', unit: '%', bar: 87 },
+                    { icon: 'fa-cloud-check', label: 'Sincronización', value: 'Actualizado', status: 'on' },
+                    { icon: 'fa-mobile', label: 'Tipo Display', value: 'E-Ink 3.7"', note: 'Bajo consumo' }
+                ]
             }
         ]
     },
@@ -654,16 +678,17 @@ const DATA = {
             name: 'Sense Weather', img: './sense-weather.jpg.png',
             icon: 'fa-cloud-sun-rain',
             title: 'Sense Weather', sub: 'Estación Meteorológica Integrada',
-            sections: [{ label: 'Variables de Medición', html:
-                `<ul class="feat-list">
-                    <li>Temperatura y Humedad ambiental</li>
-                    <li>Velocidad y Dirección del viento</li>
-                    <li>Pluviómetro (precipitación)</li>
-                    <li>Intensidad de Rayos UV</li>
-                    <li>Energía solar (W/m²)</li>
-                    <li>Pronóstico algorítmico</li>
-                </ul>`
-            }]
+            desc: 'Estación meteorológica profesional que monitorea todas las variables climáticas. Integración con alertas automáticas y pronósticos algorítmicos para toma de decisiones.',
+            metrics: [
+                { icon: 'fa-thermometer', label: 'Temperatura', value: '24.8', unit: '°C', bar: 62 },
+                { icon: 'fa-droplet', label: 'Humedad', value: '71', unit: '%', bar: 71 },
+                { icon: 'fa-wind', label: 'Velocidad Viento', value: '3.2', unit: 'm/s', bar: 53 },
+                { icon: 'fa-compass', label: 'Dirección Viento', value: 'SE', note: '134°' },
+                { icon: 'fa-cloud-rain', label: 'Precipitación', value: '2.4', unit: 'mm', bar: 24 },
+                { icon: 'fa-sun', label: 'Radiación UV', value: '6.2', unit: 'índice', bar: 62 },
+                { icon: 'fa-bolt', label: 'Energía Solar', value: '654', unit: 'W/m²', bar: 65 },
+                { icon: 'fa-eye', label: 'Visibilidad', value: '10', unit: 'km', bar: 83 }
+            ]
         }]
     }
 };
@@ -773,22 +798,57 @@ function openPanel(zoneId, idx, e) {
     const device = zone.devices[idx];
 
     panel.style.setProperty('--panel-color', zone.color);
-    accent.style.background = zone.color;
+    accent.style.background = `linear-gradient(90deg,${zone.color},transparent)`;
+
+    // — Construir tarjetas de métricas —
+    const metricsHTML = device.metrics.map(m => {
+        const isStatus = m.status !== undefined;
+        const cls = isStatus
+            ? (m.status === 'on'  ? 'mc s-on'
+             : m.status === 'off' ? 'mc s-off'
+             : 'mc s-pend')
+            : 'mc';
+        const barHTML = (!isStatus && m.bar !== undefined && m.bar > 0)
+            ? `<div class="mc-bar"><div class="mc-bar-fill" style="width:${m.bar}%"></div></div>` : '';
+        return `
+        <div class="${cls}">
+            <div class="mc-icon"><i class="fa-solid ${m.icon}"></i></div>
+            <div class="mc-label">${m.label}</div>
+            <div class="mc-val">${m.value}${m.unit ? `<span class="u">${m.unit}</span>` : ''}</div>
+            ${m.note ? `<div class="mc-note">${m.note}</div>` : ''}
+            ${barHTML}
+        </div>`;
+    }).join('');
+
+    // — Grid según cantidad de métricas —
+    const count = device.metrics.length;
+    const gridClass = count <= 2 ? 'metrics-grid g1'
+                    : count === 3 ? 'metrics-grid g3'
+                    : 'metrics-grid';
 
     body.innerHTML = `
-        <div class="panel-header">
-            <div class="panel-icon"><i class="fa-solid ${device.icon}"></i></div>
+        <div class="pd-header">
+            <div class="pd-icon"><i class="fa-solid ${device.icon}"></i></div>
             <div>
-                <div class="panel-name">${device.title}</div>
-                <div class="panel-sub">${device.sub}</div>
+                <div class="pd-name">${device.title}</div>
+                <div class="pd-sub">${device.sub}</div>
+            </div>
+            <div class="pd-badge">Online</div>
+        </div>
+
+        <div class="pd-photo-wrap">
+            <img class="pd-photo" src="${device.img}" alt="${device.name}"
+                 onerror="this.src='https://placehold.co/400x175/0c1410/666?text=${encodeURIComponent(device.name)}'">
+        </div>
+
+        <p class="pd-desc">${device.desc}</p>
+
+        <div class="pd-dashboard">
+            <div class="dash-label">Variables de medición</div>
+            <div class="${gridClass}">
+                ${metricsHTML}
             </div>
         </div>
-        ${device.sections.map(s => `
-            <div class="section">
-                <div class="section-label">${s.label}</div>
-                ${s.html}
-            </div>
-        `).join('')}
     `;
 
     panel.classList.add('on');
