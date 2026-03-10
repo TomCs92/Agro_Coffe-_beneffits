@@ -583,12 +583,12 @@ const DATA = {
             title: 'Gateway IoT', sub: 'Infraestructura de comunicaciones',
             desc: 'El Gateway IoT es el cerebro de comunicaciones de la finca. Recibe en tiempo real toda la información de los sensores y garantiza transmisión estable hacia la nube mediante LTE/LoRa con redundancia automática.',
             metrics: [
-                { icon: 'fa-signal', label: 'Señal LTE', value: '98', unit: '%', bar: 98 },
-                { icon: 'fa-wifi', label: 'Signal LoRa', value: '-78', unit: 'dBm', bar: 72 },
-                { icon: 'fa-network-wired', label: 'Conexión Nube', value: 'Activa', status: 'on' },
-                { icon: 'fa-temperature-half', label: 'Temp. Dispositivo', value: '42', unit: '°C', note: 'Óptima' },
-                { icon: 'fa-plug', label: 'Energía', value: '12.4', unit: 'V', bar: 82 },
-                { icon: 'fa-database', label: 'Almacenamiento', value: '68', unit: '%', bar: 68 }
+                { icon:'fa-cloud',           label:'AWS Sync',         value:'ACTIVO',   unit:'',    note:'Última sync hace 12s',     status:'on'  },
+                { icon:'fa-signal',          label:'Señal 4G',          value:'–87',      unit:'dBm', note:'Cobertura buena',           bar:72  },
+                { icon:'fa-triangle-exclamation', label:'Alertas',      value:'0',        unit:'',    note:'Sin desconexiones',         bar:0   },
+                { icon:'fa-hard-drive',      label:'Almacenamiento',    value:'68',       unit:'GB',  note:'4 semanas guardadas',       bar:68  },
+                { icon:'fa-wifi',            label:'WiFi Local',        value:'ACTIVO',   unit:'',    note:'Red InnovaKit-Farm',        status:'on'  },
+                { icon:'fa-tower-cell',      label:'LoRaWAN',           value:'PEND.',    unit:'',    note:'En implementación',         status:'off' }
             ]
         }]
     },
@@ -601,12 +601,12 @@ const DATA = {
                 title: 'Secafé', sub: 'Medición de humedad y peso',
                 desc: 'Sistema avanzado de medición de humedad y peso diseñado para el proceso de secado del café. Proporciona control exacto con alertas automáticas al alcanzar umbrales óptimos.',
                 metrics: [
-                    { icon: 'fa-droplet', label: 'Humedad Relativa', value: '48', unit: '%', bar: 48 },
-                    { icon: 'fa-weight', label: 'Peso Total Bache', value: '480', unit: 'kg', note: 'Óptimo' },
-                    { icon: 'fa-hourglass-end', label: 'Tiempo Secado', value: '12h 24m', status: 'on' },
-                    { icon: 'fa-fire', label: 'Temperatura', value: '58', unit: '°C', bar: 73 },
-                    { icon: 'fa-check-circle', label: 'Estado Bache', value: 'En Curso', status: 'on' },
-                    { icon: 'fa-exclamation-triangle', label: 'Alertas', value: '0', status: 'off' }
+                    { icon:'fa-thermometer-half',      label:'Temperatura',       value:'22',   unit:'°C',  note:'Interior marquesina',        bar:44 },
+                    { icon:'fa-droplet',               label:'Humedad Grano',     value:'45',   unit:'%',   note:'↓ 14% = sobredisecado',      bar:45 },
+                    { icon:'fa-weight-hanging',        label:'Peso Muestra',      value:'270',  unit:'g',   note:'Muestra representativa',     bar:54 },
+                    { icon:'fa-hourglass-half',        label:'Tiempo Transcurrido', value:'6',  unit:'días',note:'Ciclo en curso',             bar:43 },
+                    { icon:'fa-clock',                 label:'Tiempo Restante',   value:'~8',   unit:'días',note:'Est. punto óptimo',          bar:57 },
+                    { icon:'fa-battery-three-quarters',label:'Batería',           value:'82',   unit:'%',   note:'Estado normal',              bar:82 }
                 ]
             },
             {
@@ -615,12 +615,10 @@ const DATA = {
                 title: 'Sense Atmos', sub: 'Automatización de clima interior',
                 desc: 'Sensor ambiental con control autónomo de ventilación. Enciende/apaga el extractor según condiciones, optimizando el proceso de secado sin intervención manual.',
                 metrics: [
-                    { icon: 'fa-thermometer', label: 'Temperatura', value: '56', unit: '°C', bar: 70 },
-                    { icon: 'fa-tint', label: 'Humedad', value: '52', unit: '%', bar: 52 },
-                    { icon: 'fa-fan', label: 'Ventilador', value: 'Activo', status: 'on' },
-                    { icon: 'fa-wind', label: 'Velocidad Aire', value: '2.4', unit: 'm/s', bar: 60 },
-                    { icon: 'fa-gauge', label: 'Presión', value: '101.2', unit: 'kPa', note: 'Normal' },
-                    { icon: 'fa-clock', label: 'Ciclo Restante', value: '8h 45m', status: 'on' }
+                    { icon:'fa-thermometer-half', label:'Temperatura',  value:'28',  unit:'°C',   note:'Interior marquesina', bar:56 },
+                    { icon:'fa-droplet',          label:'Humedad',      value:'72',  unit:'%HR',  note:'Ambiente interior',   bar:72 },
+                    { icon:'fa-fan',              label:'Ventilador',   value:'ON',  unit:'',     note:'Activado automático', status:'on' },
+                    { icon:'fa-battery-full',     label:'Batería',      value:'94',  unit:'%',    note:'Carga completa',      bar:94 }
                 ]
             }
         ]
@@ -634,12 +632,11 @@ const DATA = {
                 title: 'Sense Flow', sub: 'Caudalímetro de precisión',
                 desc: 'Medición exacta del caudal de entrada al proceso de beneficio. Garantiza control estricto del uso de agua con registro histórico para certificaciones de sostenibilidad.',
                 metrics: [
-                    { icon: 'fa-droplet', label: 'Caudal Actual', value: '8.5', unit: 'L/min', bar: 71 },
-                    { icon: 'fa-square', label: 'Volumen Hoy', value: '1.240', unit: 'm³', note: 'En límite' },
-                    { icon: 'fa-alert-circle', label: 'Estado Válvula', value: 'Abierta', status: 'on' },
-                    { icon: 'fa-chart-line', label: 'Flujo Promedio', value: '7.8', unit: 'L/min' },
-                    { icon: 'fa-hourglass-end', label: 'Consumo Esta Hora', value: '486', unit: 'L' },
-                    { icon: 'fa-radiation', label: 'Calidad Agua', value: 'pH 6.8', note: 'Óptima' }
+                    { icon:'fa-faucet',           label:'Caudal Actual',  value:'3.8',   unit:'L/min', note:'Flujo en proceso',       bar:38 },
+                    { icon:'fa-cubes-stacked',    label:'Volumen Hoy',    value:'1.240', unit:'L',     note:'Acumulado del día',      bar:62 },
+                    { icon:'fa-rotate',           label:'Eventos Uso',    value:'3',     unit:'ingresos', note:'Desde las 6 am',     bar:60 },
+                    { icon:'fa-circle-dot',       label:'Válvula',        value:'ABIERTA', unit:'',   note:'Control remoto activo',  status:'on' },
+                    { icon:'fa-battery-half',     label:'Batería',        value:'61',    unit:'%',     note:'Nivel aceptable',        bar:61 }
                 ]
             },
             {
@@ -662,12 +659,9 @@ const DATA = {
                 title: 'Sense Atmos View', sub: 'Monitor local de condiciones',
                 desc: 'Sensor con pantalla integrada para lectura inmediata de temperatura y humedad en lavado y fermentación, sin necesidad de consultar dispositivos.',
                 metrics: [
-                    { icon: 'fa-thermometer', label: 'Temperatura', value: '28', unit: '°C', bar: 56 },
-                    { icon: 'fa-droplet', label: 'Humedad', value: '64', unit: '%', bar: 64 },
-                    { icon: 'fa-lightbulb', label: 'Pantalla', value: 'Activa', status: 'on' },
-                    { icon: 'fa-battery-three-quarters', label: 'Batería', value: '87', unit: '%', bar: 87 },
-                    { icon: 'fa-cloud-check', label: 'Sincronización', value: 'Actualizado', status: 'on' },
-                    { icon: 'fa-mobile', label: 'Tipo Display', value: 'E-Ink 3.7"', note: 'Bajo consumo' }
+                    { icon:'fa-thermometer-half',      label:'Temperatura', value:'22',  unit:'°C',   note:'Fase fermentación',  bar:44 },
+                    { icon:'fa-droplet',               label:'Humedad',     value:'74',  unit:'%HR',  note:'Ambiente beneficio', bar:74 },
+                    { icon:'fa-battery-three-quarters',label:'Batería',     value:'78',  unit:'%',    note:'Estado normal',      bar:78 }
                 ]
             }
         ]
