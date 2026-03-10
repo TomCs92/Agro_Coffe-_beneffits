@@ -463,16 +463,6 @@ Base para **dashboard real** conectado a una API de sensores IoT (ThingsBoard, U
 Para licencias personalizadas, contactar a:
 📧 **innovakit@example.com**
 
----
-
-## 📞 Contacto & Soporte
-
-- 🌐 Sitio web: [innovakit.com](https://innovakit.com)
-- 📧 Email: innovakit@example.com
-- 💬 WhatsApp: +57 XXX XXXX XXX
-- 🐙 GitHub: [@innovakit-team](https://github.com/innovakit)
-
----
 
 <p align="center">
   <strong>☕ Hecho con pasión para el café colombiano</strong><br>
