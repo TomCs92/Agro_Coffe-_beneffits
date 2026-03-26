@@ -13,9 +13,11 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
-# VS Code
+# Editores
 .vscode/
 *.code-workspace
+*.swp
+*.swo
 
 # Archivos de sistema Antigravity / Gemini
 .gemini/
