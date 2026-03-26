@@ -940,6 +940,265 @@
                 height: 145px;
             }
         }
+
+        /* ============================================================
+           FAB — BOTÓN FLOTANTE DASHBOARD INNOVAKIT
+           ============================================================ */
+        .innova-fab {
+            position: absolute;
+            bottom: 3.5%;
+            right: 2.5%;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            width: clamp(70px, 7vw, 88px);
+            height: clamp(70px, 7vw, 88px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(10, 16, 12, 0.92);
+            backdrop-filter: blur(14px);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(9px, 0.9vw, 11px);
+            font-weight: 500;
+            letter-spacing: .3px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: transform .25s var(--ease-spring), opacity .25s, border-color .25s, background .25s, box-shadow .25s;
+            user-select: none;
+        }
+
+        .innova-fab .fab-icon {
+            font-size: clamp(22px, 2.4vw, 28px);
+            color: var(--c4);
+            transition: transform .25s var(--ease-spring), color .25s;
+        }
+
+        .innova-fab .fab-label {
+            font-size: clamp(8px, 0.8vw, 10px);
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color .25s;
+        }
+
+        .innova-fab:hover {
+            transform: translateY(-4px) scale(1.04);
+            background: rgba(15, 24, 17, 0.97);
+            border-color: var(--c4);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.7), 0 0 22px rgba(76,175,80,0.18), 0 0 0 1px rgba(76,175,80,0.25);
+        }
+
+        .innova-fab:hover .fab-icon {
+            transform: scale(1.12);
+        }
+
+        .innova-fab:hover .fab-label {
+            color: var(--text);
+        }
+
+        .innova-fab.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(8px) scale(0.95);
+        }
+
+        /* ── MODAL ── */
+        .innova-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            animation: modal-in .25s var(--ease-spring);
+        }
+
+        .innova-modal.open {
+            display: flex;
+        }
+
+        @keyframes modal-in {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .innova-modal-box {
+            background: #080e0a;
+            width: 92%;
+            max-width: 1200px;
+            height: 90vh;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: box-in .3s var(--ease-spring);
+        }
+
+        @keyframes box-in {
+            from { transform: scale(.94) translateY(16px); opacity: 0; }
+            to   { transform: scale(1) translateY(0);      opacity: 1; }
+        }
+
+        .innova-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--panel-bg);
+            border-bottom: 2px solid var(--c4);
+            flex-shrink: 0;
+        }
+
+        .innova-modal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -.2px;
+        }
+
+        .innova-modal-title i {
+            color: var(--c4);
+            font-size: 14px;
+        }
+
+        .innova-modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .innova-ext-link {
+            font-size: 11px;
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color .2s;
+        }
+
+        .innova-ext-link:hover {
+            color: var(--text);
+        }
+
+        .innova-close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 12px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+
+        .innova-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .innova-iframe-wrap {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .innova-iframe-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Spinner de carga */
+        .innova-spinner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: #080e0a;
+            transition: opacity .3s;
+        }
+
+        .innova-spinner.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .innova-spinner-ring {
+            width: 36px;
+            height: 36px;
+            border: 2.5px solid rgba(255,255,255,0.08);
+            border-top-color: var(--c4);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        .innova-spinner p {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .5px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .innova-modal-box {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                max-width: unset;
+            }
+            .innova-fab {
+                bottom: 3%;
+                right: 2%;
+                width: 64px;
+                height: 64px;
+                border-radius: 14px;
+            }
+        }
+
+        /* ============================================================
+           PILL HOVER — HOTSPOT DESTACADO
+           Cuando el mouse entra a una pill inferior, el hotspot
+           correspondiente se ilumina con su color de zona.
+           ============================================================ */
+        .hotspot.highlighted .hs-ring {
+            width: 30px;
+            height: 30px;
+            box-shadow: 0 0 14px var(--zone-color);
+        }
+
+        .hotspot.highlighted .hs-core {
+            transform: scale(1.6);
+            background: var(--zone-color);
+            box-shadow: 0 0 22px var(--zone-color), 0 0 6px #fff;
+        }
+
+        .hotspot.highlighted .hs-pulse {
+            animation-duration: 1.2s;
+            opacity: .8;
+        }
     </style>
 </head>
 
@@ -1058,6 +1317,12 @@
             <!-- Popup flotante -->
             <div id="popup" class="popup"></div>
 
+            <!-- Botón Dashboard (posicionado sobre el logo de Gemini) -->
+            <button id="innova-fab" class="innova-fab" title="Abrir Dashboard InnovaKit" onclick="openInnovaModal()">
+                <i class="fa-solid fa-table-columns fab-icon"></i>
+                <span class="fab-label">Dashboard</span>
+            </button>
+
             <!-- Top bar (dentro del wrapper → position: absolute correcto) -->
             <div class="top-bar">
                 <div>
@@ -1112,6 +1377,14 @@
     </div>
 
     <script>
+        /* ================================================================
+           CONFIGURACIÓN DASHBOARD RASPBERRY PI
+           ================================================================
+           En desarrollo local: http://localhost:5000
+           En producción (Raspberry Pi en red): http://192.168.1.XXX:5000
+           ================================================================ */
+        const RASPBERRY_URL = 'http://localhost:5000';
+
         /* ================================================================
            BASE DE DATOS DE ZONAS Y DISPOSITIVOS
            ================================================================ */
@@ -1547,6 +1820,8 @@
 
             panel.classList.add('on');
             overlay.classList.add('on');
+            // Ocultar FAB mientras el panel lateral esté abierto
+            document.getElementById('innova-fab').classList.add('hidden');
         }
 
         function triggerZone(zoneId) {
@@ -1556,6 +1831,8 @@
         function closePanel() {
             panel.classList.remove('on');
             overlay.classList.remove('on');
+            // Restaurar FAB al cerrar el panel lateral
+            document.getElementById('innova-fab').classList.remove('hidden');
         }
 
         document.addEventListener('click', e => {
@@ -1563,7 +1840,89 @@
                 popup.classList.remove('show');
             }
         });
+
+        /* ================================================================
+           PILL HOVER — ILUMINAR HOTSPOT CORRESPONDIENTE
+           ================================================================ */
+        document.querySelectorAll('.pill[data-zone]').forEach(pill => {
+            const hs = document.getElementById('hs-' + pill.dataset.zone);
+            if (!hs) return;
+            pill.addEventListener('mouseenter', () => hs.classList.add('highlighted'));
+            pill.addEventListener('mouseleave', () => hs.classList.remove('highlighted'));
+        });
+
+        /* ================================================================
+           FAB — FUNCIONES GLOBALES DASHBOARD INNOVAKIT
+           Funciones globales para que el onclick del HTML las encuentre.
+           ================================================================ */
+        function openInnovaModal() {
+            const modal   = document.getElementById('innova-modal');
+            const iframe  = document.getElementById('innova-iframe');
+            const spinner = document.getElementById('innova-spinner');
+            const extLink = document.getElementById('innova-ext-link');
+            extLink.href = RASPBERRY_URL;
+            spinner.classList.remove('hidden');
+            iframe.src = RASPBERRY_URL;
+            modal.classList.add('open');
+        }
+
+        function closeInnovaModal() {
+            const modal  = document.getElementById('innova-modal');
+            const iframe = document.getElementById('innova-iframe');
+            modal.classList.remove('open');
+            setTimeout(() => { iframe.src = ''; }, 300);
+        }
+
+        // Ocultar spinner cuando el iframe termine de cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe  = document.getElementById('innova-iframe');
+            const spinner = document.getElementById('innova-spinner');
+            if (iframe && spinner) {
+                iframe.addEventListener('load', () => {
+                    if (iframe.src) spinner.classList.add('hidden');
+                });
+            }
+            // Cerrar con tecla Escape
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') closeInnovaModal();
+            });
+        });
     </script>
+
+    <!-- MODAL DASHBOARD INNOVAKIT -->
+    <div id="innova-modal" class="innova-modal" onclick="if(event.target===this)closeInnovaModal()">
+        <div class="innova-modal-box">
+
+            <!-- Barra superior -->
+            <div class="innova-modal-header">
+                <div class="innova-modal-title">
+                    <i class="fa-solid fa-display"></i>
+                    Dashboard InnovaKit
+                </div>
+                <div class="innova-modal-actions">
+                    <a id="innova-ext-link" href="#" target="_blank" rel="noopener" class="innova-ext-link">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        Abrir en pestaña nueva
+                    </a>
+                    <button id="innova-close" class="innova-close-btn" onclick="closeInnovaModal()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Área del iframe -->
+            <div class="innova-iframe-wrap" onclick="event.target===this.parentElement.parentElement.parentElement&&closeInnovaModal()">
+                <!-- Spinner de carga -->
+                <div id="innova-spinner" class="innova-spinner">
+                    <div class="innova-spinner-ring"></div>
+                    <p>Conectando con Dashboard InnovaKit…</p>
+                </div>
+                <iframe id="innova-iframe" src="" title="Dashboard InnovaKit"></iframe>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 
 </html>
