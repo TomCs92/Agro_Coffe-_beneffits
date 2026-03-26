@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -15,28 +17,55 @@
            VARIABLES DE DISEÑO
            ============================================================ */
         :root {
-            --sky:      #daeaf6;   /* Color exacto del cielo de la imagen */
+            --sky: #daeaf6;
+            /* Color exacto del cielo de la imagen */
             --panel-bg: rgba(10, 16, 12, 0.97);
-            --text:     #F4F4F2;
-            --muted:    #8A9BA8;
-            --line:     rgba(255,255,255,0.08);
+            --text: #F4F4F2;
+            --muted: #8A9BA8;
+            --line: rgba(255, 255, 255, 0.08);
 
-            --c1: #26C6DA;   /* Gateway    — Cyan   */
-            --c2: #F4B41A;   /* Marquesina — Dorado */
-            --c3: #E53935;   /* Beneficio  — Rojo   */
-            --c4: #4CAF50;   /* Clima      — Verde  */
+            --c1: #26C6DA;
+            /* Gateway       — Cyan          */
+            --c2: #F4B41A;
+            /* Marquesina    — Dorado        */
+            --c3: #E53935;
+            /* Beneficio     — Rojo          */
+            --c4: #4CAF50;
+            /* Clima         — Verde         */
+            --c5: #9B59B6;
+            /* Drone         — Violeta       */
+            --c6: #27AE60;
+            /* Restauración  — Esmeralda     */
+            --c7: #E67E22;
+            /* Biodigestor   — Naranja       */
+            --c8: #2980B9;
+            /* Bocatoma      — Azul          */
+            --c9: #1ABC9C;
+            /* Conservación  — Turquesa      */
+            --c10: #C0892B;
+            /* Compostaje    — Café/Tierra   */
+            --c11: #BDC81E;
+            /* Bodega        — Amarillo-verde */
 
             --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         /* ============================================================
            SHELL — sin overflow, sin scroll, fondo = color cielo
            ============================================================ */
-        html, body {
-            width: 100%; height: 100%;
+        html,
+        body {
+            width: 100%;
+            height: 100%;
             font-family: 'DM Sans', sans-serif;
             background: var(--sky);
             color: var(--text);
@@ -49,7 +78,8 @@
            ============================================================ */
         .app {
             position: relative;
-            width: 100vw; height: 100vh;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -74,12 +104,12 @@
            ============================================================ */
         .map-wrapper {
             position: relative;
-            width:  min(100vw, calc(100vh * 16 / 9));
+            width: min(100vw, calc(100vh * 16 / 9));
             height: min(100vh, calc(100vw * 9 / 16));
             background: var(--sky);
             overflow: hidden;
             /* Sutil sombra interior para reforzar integración con fondo */
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.08);
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.08);
         }
 
         /* ============================================================
@@ -88,7 +118,8 @@
            Si el ratio nativo ≠ 16:9, el letterboxing usa --sky.
            ============================================================ */
         .farm-img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             display: block;
             object-fit: contain;
             object-position: center;
@@ -102,51 +133,94 @@
            ============================================================ */
         .rotate-notice {
             display: none;
-            position: fixed; inset: 0; z-index: 9999;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
             background: #0a100c;
             flex-direction: column;
-            justify-content: center; align-items: center;
-            gap: 20px; text-align: center; padding: 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            padding: 40px;
         }
-        .rotate-notice i { font-size: 48px; color: var(--c4); animation: rotate-icon 2s ease-in-out infinite; }
-        .rotate-notice p { font-size: 15px; color: var(--muted); line-height: 1.6; }
-        @keyframes rotate-icon { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(90deg)} }
+
+        .rotate-notice i {
+            font-size: 48px;
+            color: var(--c4);
+            animation: rotate-icon 2s ease-in-out infinite;
+        }
+
+        .rotate-notice p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        @keyframes rotate-icon {
+
+            0%,
+            100% {
+                transform: rotate(0deg)
+            }
+
+            50% {
+                transform: rotate(90deg)
+            }
+        }
 
         @media (max-width: 600px) and (orientation: portrait) {
-            .rotate-notice { display: flex; }
+            .rotate-notice {
+                display: flex;
+            }
         }
 
         /* ============================================================
            TOP BAR
            ============================================================ */
         .top-bar {
-            position: absolute; top: 0; left: 0;
-            width: 100%; z-index: 50;
-            padding: clamp(12px,2.5%,24px) clamp(16px,3.5%,40px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            padding: clamp(12px, 2.5%, 24px) clamp(16px, 3.5%, 40px);
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, transparent 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
             pointer-events: none;
         }
 
         .logo {
-            display: flex; align-items: center; gap: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: clamp(14px, 2vw, 22px);
-            font-weight: 700; letter-spacing: -0.3px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
+
         .logo-icon {
-            width: clamp(28px,3.5vw,38px); height: clamp(28px,3.5vw,38px);
+            width: clamp(28px, 3.5vw, 38px);
+            height: clamp(28px, 3.5vw, 38px);
             border-radius: 8px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            display: flex; align-items: center; justify-content: center;
-            font-size: clamp(12px,1.6vw,16px);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(12px, 1.6vw, 16px);
             color: var(--c4);
         }
-        .logo-text span { color: var(--muted); font-weight: 300; }
+
+        .logo-text span {
+            color: var(--muted);
+            font-weight: 300;
+        }
+
         .tagline {
-            font-size: clamp(8px,1vw,10px);
+            font-size: clamp(8px, 1vw, 10px);
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--muted);
@@ -156,55 +230,169 @@
 
         .hint {
             pointer-events: all;
-            display: flex; align-items: center; gap: 8px;
-            font-size: clamp(9px,1.1vw,12px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: clamp(9px, 1.1vw, 12px);
             color: var(--text);
-            background: rgba(0,0,0,0.45);
-            padding: clamp(4px,0.8%,8px) clamp(10px,1.5%,18px);
+            background: rgba(0, 0, 0, 0.45);
+            padding: clamp(4px, 0.8%, 8px) clamp(10px, 1.5%, 18px);
             border-radius: 30px;
             border: 1px solid var(--line);
             backdrop-filter: blur(8px);
         }
-        .hint-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c4); animation: blink 1.8s infinite; }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+        .hint-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--c4);
+            animation: blink 1.8s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.2
+            }
+        }
 
         /* ============================================================
            BOTTOM BAR — PILLS DE NAVEGACIÓN
            ============================================================ */
         .bottom-bar {
-            position: absolute; bottom: clamp(12px,3%,28px); left: 0;
-            width: 100%; z-index: 50;
-            display: flex; justify-content: center;
-            gap: clamp(6px,1%,12px);
+            position: absolute;
+            bottom: clamp(12px, 3%, 28px);
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            gap: clamp(6px, 1%, 12px);
             flex-wrap: wrap;
-            padding: 0 clamp(10px,2%,24px);
+            padding: 0 clamp(10px, 2%, 24px);
         }
 
         .pill {
-            display: flex; align-items: center; gap: 7px;
-            padding: clamp(5px,0.8%,8px) clamp(10px,1.5%,18px);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: clamp(5px, 0.8%, 8px) clamp(10px, 1.5%, 18px);
             border-radius: 40px;
-            font-size: clamp(9px,1vw,11px);
+            font-size: clamp(9px, 1vw, 11px);
             font-weight: 500;
             cursor: pointer;
-            background: rgba(8,12,10,0.65);
+            background: rgba(8, 12, 10, 0.65);
             border: 1px solid var(--line);
             color: var(--muted);
             backdrop-filter: blur(10px);
             transition: color .25s, background .25s, border-color .25s, transform .2s;
             user-select: none;
         }
-        .pill i { font-size: 11px; transition: color .25s; }
-        .pill:hover { color: var(--text); background: rgba(8,12,10,0.92); transform: translateY(-2px); }
 
-        .pill[data-zone="gateway"]    i { color: var(--c1); }
-        .pill[data-zone="marquesina"] i { color: var(--c2); }
-        .pill[data-zone="beneficio"]  i { color: var(--c3); }
-        .pill[data-zone="clima"]      i { color: var(--c4); }
-        .pill[data-zone="gateway"]:hover    { border-color: var(--c1); }
-        .pill[data-zone="marquesina"]:hover { border-color: var(--c2); }
-        .pill[data-zone="beneficio"]:hover  { border-color: var(--c3); }
-        .pill[data-zone="clima"]:hover      { border-color: var(--c4); }
+        .pill i {
+            font-size: 11px;
+            transition: color .25s;
+        }
+
+        .pill:hover {
+            color: var(--text);
+            background: rgba(8, 12, 10, 0.92);
+            transform: translateY(-2px);
+        }
+
+        .pill[data-zone="gateway"] i {
+            color: var(--c1);
+        }
+
+        .pill[data-zone="marquesina"] i {
+            color: var(--c2);
+        }
+
+        .pill[data-zone="beneficio"] i {
+            color: var(--c3);
+        }
+
+        .pill[data-zone="clima"] i {
+            color: var(--c4);
+        }
+
+        .pill[data-zone="drone"] i {
+            color: var(--c5);
+        }
+
+        .pill[data-zone="restauracion"]i {
+            color: var(--c6);
+        }
+
+        .pill[data-zone="biodigestor"] i {
+            color: var(--c7);
+        }
+
+        .pill[data-zone="bocatoma"] i {
+            color: var(--c8);
+        }
+
+        .pill[data-zone="conservacion"]i {
+            color: var(--c9);
+        }
+
+        .pill[data-zone="compostaje"] i {
+            color: var(--c10);
+        }
+
+        .pill[data-zone="bodega"] i {
+            color: var(--c11);
+        }
+
+        .pill[data-zone="gateway"]:hover {
+            border-color: var(--c1);
+        }
+
+        .pill[data-zone="marquesina"]:hover {
+            border-color: var(--c2);
+        }
+
+        .pill[data-zone="beneficio"]:hover {
+            border-color: var(--c3);
+        }
+
+        .pill[data-zone="clima"]:hover {
+            border-color: var(--c4);
+        }
+
+        .pill[data-zone="drone"]:hover {
+            border-color: var(--c5);
+        }
+
+        .pill[data-zone="restauracion"]:hover {
+            border-color: var(--c6);
+        }
+
+        .pill[data-zone="biodigestor"]:hover {
+            border-color: var(--c7);
+        }
+
+        .pill[data-zone="bocatoma"]:hover {
+            border-color: var(--c8);
+        }
+
+        .pill[data-zone="conservacion"]:hover {
+            border-color: var(--c9);
+        }
+
+        .pill[data-zone="compostaje"]:hover {
+            border-color: var(--c10);
+        }
+
+        .pill[data-zone="bodega"]:hover {
+            border-color: var(--c11);
+        }
 
         /* ============================================================
            HOTSPOTS
@@ -212,33 +400,50 @@
            Usan data-rel-top / data-rel-left como % sobre la imagen real.
            ============================================================ */
         .hotspot {
-            position: absolute; z-index: 30;
+            position: absolute;
+            z-index: 30;
             cursor: pointer;
             transform: translate(-50%, -50%);
-            width: 36px; height: 36px;
-            display: flex; justify-content: center; align-items: center;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             /* Oculto hasta que JS calcule posición exacta */
             opacity: 0;
             transition: opacity .3s;
         }
-        .hotspot.ready { opacity: 1; }
+
+        .hotspot.ready {
+            opacity: 1;
+        }
 
         /* Anillo exterior pulsante */
         .hs-pulse {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             border: 1.5px solid var(--zone-color);
             border-radius: 50%;
-            animation: pulse 2.8s cubic-bezier(.215,.61,.355,1) infinite;
+            animation: pulse 2.8s cubic-bezier(.215, .61, .355, 1) infinite;
         }
+
         @keyframes pulse {
-            0%   { transform: scale(.4); opacity: .9; }
-            100% { transform: scale(2);  opacity: 0; }
+            0% {
+                transform: scale(.4);
+                opacity: .9;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
 
         /* Anillo medio */
         .hs-ring {
             position: absolute;
-            width: 18px; height: 18px;
+            width: 18px;
+            height: 18px;
             border: 1.5px solid var(--zone-color);
             border-radius: 50%;
             transition: width .25s, height .25s, border-color .25s;
@@ -246,565 +451,1017 @@
 
         /* Núcleo */
         .hs-core {
-            width: 9px; height: 9px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             background: #fff;
             border: 2px solid var(--zone-color);
             box-shadow: 0 0 12px var(--zone-color);
-            position: relative; z-index: 1;
+            position: relative;
+            z-index: 1;
             transition: transform .25s, background .25s;
         }
 
-        .hotspot:hover .hs-ring  { width: 28px; height: 28px; }
-        .hotspot:hover .hs-core  { transform: scale(1.4); background: var(--zone-color); }
+        .hotspot:hover .hs-ring {
+            width: 28px;
+            height: 28px;
+        }
+
+        .hotspot:hover .hs-core {
+            transform: scale(1.4);
+            background: var(--zone-color);
+        }
 
         /* Colores por zona */
-        [data-zone="gateway"]    { --zone-color: var(--c1); }
-        [data-zone="marquesina"] { --zone-color: var(--c2); }
-        [data-zone="beneficio"]  { --zone-color: var(--c3); }
-        [data-zone="clima"]      { --zone-color: var(--c4); }
+        [data-zone="gateway"] {
+            --zone-color: var(--c1);
+        }
+
+        [data-zone="marquesina"] {
+            --zone-color: var(--c2);
+        }
+
+        [data-zone="beneficio"] {
+            --zone-color: var(--c3);
+        }
+
+        [data-zone="clima"] {
+            --zone-color: var(--c4);
+        }
+
+        [data-zone="drone"] {
+            --zone-color: var(--c5);
+        }
+
+        [data-zone="restauracion"] {
+            --zone-color: var(--c6);
+        }
+
+        [data-zone="biodigestor"] {
+            --zone-color: var(--c7);
+        }
+
+        [data-zone="bocatoma"] {
+            --zone-color: var(--c8);
+        }
+
+        [data-zone="conservacion"] {
+            --zone-color: var(--c9);
+        }
+
+        [data-zone="compostaje"] {
+            --zone-color: var(--c10);
+        }
+
+        [data-zone="bodega"] {
+            --zone-color: var(--c11);
+        }
 
         /* ============================================================
            POPUP FLOTANTE DE DISPOSITIVOS
            ============================================================ */
         .popup {
-            position: absolute; z-index: 60;
-            display: flex; gap: 10px;
-            background: rgba(10,16,12,0.96);
+            position: absolute;
+            z-index: 60;
+            display: flex;
+            gap: 10px;
+            background: rgba(10, 16, 12, 0.96);
             backdrop-filter: blur(18px);
-            padding: clamp(10px,1.5%,16px);
+            padding: clamp(10px, 1.5%, 16px);
             border-radius: 14px;
             border-top: 2.5px solid #fff;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
             transform: translate(-50%, 0) scale(.88);
-            opacity: 0; pointer-events: none;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity .3s var(--ease-spring), transform .3s var(--ease-spring);
             /* Nunca desborde por la derecha en móvil */
             max-width: calc(100vw - 32px);
             flex-wrap: wrap;
             justify-content: center;
         }
+
         .popup.show {
             transform: translate(-50%, 14px) scale(1);
-            opacity: 1; pointer-events: all;
+            opacity: 1;
+            pointer-events: all;
         }
 
         .dev-card {
-            width: clamp(72px,9vw,90px);
-            display: flex; flex-direction: column; align-items: center;
+            width: clamp(72px, 9vw, 90px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             cursor: pointer;
             transition: transform .2s var(--ease-spring);
             padding: 4px;
             border-radius: 10px;
         }
-        .dev-card:hover { transform: translateY(-5px); }
+
+        .dev-card:hover {
+            transform: translateY(-5px);
+        }
+
         .dev-card img {
-            width: clamp(58px,7.5vw,76px);
-            height: clamp(58px,7.5vw,76px);
+            width: clamp(58px, 7.5vw, 76px);
+            height: clamp(58px, 7.5vw, 76px);
             border-radius: 8px;
             object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             margin-bottom: 7px;
             background: #111;
         }
+
         .dev-card span {
-            font-size: clamp(8px,0.9vw,10px);
-            font-weight: 500; color: var(--text);
-            text-align: center; line-height: 1.3;
+            font-size: clamp(8px, 0.9vw, 10px);
+            font-weight: 500;
+            color: var(--text);
+            text-align: center;
+            line-height: 1.3;
         }
 
         /* ============================================================
            PANEL LATERAL — DASHBOARD REDISEÑO
            ============================================================ */
         .overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5);
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
-            z-index: 100; opacity: 0; pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity .4s;
         }
-        .overlay.on { opacity: 1; pointer-events: all; }
+
+        .overlay.on {
+            opacity: 1;
+            pointer-events: all;
+        }
 
         .panel {
-            position: fixed; top: 0; right: 0;
+            position: fixed;
+            top: 0;
+            right: 0;
             width: min(400px, 100vw);
             height: 100%;
             background: #080e0a;
-            border-left: 1px solid rgba(255,255,255,0.07);
+            border-left: 1px solid rgba(255, 255, 255, 0.07);
             z-index: 110;
             transform: translateX(102%);
             transition: transform .5s var(--ease-out-expo);
-            overflow-y: auto; overflow-x: hidden;
-            display: flex; flex-direction: column;
-            box-shadow: -30px 0 70px rgba(0,0,0,0.8);
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -30px 0 70px rgba(0, 0, 0, 0.8);
             scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.07) transparent;
+            scrollbar-color: rgba(255, 255, 255, 0.07) transparent;
         }
-        .panel.on { transform: translateX(0); }
+
+        .panel.on {
+            transform: translateX(0);
+        }
 
         .panel-accent {
-            height: 2px; flex-shrink: 0;
+            height: 2px;
+            flex-shrink: 0;
             background: linear-gradient(90deg, var(--panel-color) 0%, transparent 100%);
         }
 
         /* — Close row — */
         .panel-close-row {
-            position: sticky; top: 0; z-index: 10;
-            display: flex; justify-content: flex-start;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: flex-start;
             padding: 14px 20px 0;
             background: #080e0a;
         }
+
         .panel-close-btn {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            width: 30px; height: 30px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--muted); font-size: 12px; cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 12px;
+            cursor: pointer;
             transition: background .2s, color .2s;
         }
-        .panel-close-btn:hover { background: rgba(255,255,255,0.09); color: var(--text); }
+
+        .panel-close-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: var(--text);
+        }
 
         /* — Header: nombre + ícono + badge — */
         .pd-header {
             padding: 18px 22px 0;
-            display: flex; align-items: flex-start; gap: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
         }
+
         .pd-icon {
-            width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.07);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; color: var(--panel-color);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--panel-color);
         }
-        .pd-name  { font-size: 17px; font-weight: 700; letter-spacing: -.3px; line-height: 1.2; }
-        .pd-sub   { font-size: 10.5px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+
+        .pd-name {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -.3px;
+            line-height: 1.2;
+        }
+
+        .pd-sub {
+            font-size: 10.5px;
+            color: var(--muted);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
         .pd-badge {
-            margin-left: auto; flex-shrink: 0;
-            display: flex; align-items: center; gap: 5px;
-            font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600;
+            margin-left: auto;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 8.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
             color: #4ade80;
-            background: rgba(74,222,128,0.07);
-            border: 1px solid rgba(74,222,128,0.14);
-            padding: 4px 9px; border-radius: 20px;
+            background: rgba(74, 222, 128, 0.07);
+            border: 1px solid rgba(74, 222, 128, 0.14);
+            padding: 4px 9px;
+            border-radius: 20px;
         }
+
         .pd-badge::before {
-            content: ''; width: 5px; height: 5px;
-            border-radius: 50%; background: #4ade80;
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #4ade80;
             animation: blink 2s infinite;
         }
 
         /* — Foto del dispositivo — */
         .pd-photo-wrap {
             margin: 18px 22px 0;
-            border-radius: 10px; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.07);
             background: #0d150f;
-            height: 175px; position: relative;
+            height: 175px;
+            position: relative;
         }
+
         .pd-photo {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center; display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
             filter: brightness(0.93) contrast(1.05);
         }
+
         .pd-photo-wrap::after {
             content: '';
-            position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 45%;
             background: linear-gradient(to top, #080e0a 0%, transparent 100%);
         }
 
         /* — Descripción breve — */
         .pd-desc {
             padding: 14px 22px 0;
-            font-size: 12px; line-height: 1.7;
-            color: #7a9188; font-weight: 300;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #7a9188;
+            font-weight: 300;
         }
 
         /* — Dashboard de métricas — */
-        .pd-dashboard { padding: 20px 22px 36px; }
+        .pd-dashboard {
+            padding: 20px 22px 36px;
+        }
 
         .dash-label {
-            font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--panel-color); font-weight: 600;
-            display: flex; align-items: center; gap: 10px;
+            font-size: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--panel-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 12px;
         }
-        .dash-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.06); }
+
+        .dash-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
 
         .metrics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 7px;
         }
-        .metrics-grid.g1 { grid-template-columns: 1fr; }
-        .metrics-grid.g3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .metrics-grid.g1 {
+            grid-template-columns: 1fr;
+        }
+
+        .metrics-grid.g3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
 
         .mc {
             background: #0c1410;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 9px;
             padding: 13px 13px 11px;
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
             transition: border-color .2s, background .2s;
         }
-        .mc:hover { border-color: rgba(255,255,255,0.1); background: #101c13; }
+
+        .mc:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: #101c13;
+        }
+
         .mc::before {
             content: '';
-            position: absolute; left: 0; top: 22%; bottom: 22%;
-            width: 2px; border-radius: 1px;
-            background: var(--panel-color); opacity: .45;
+            position: absolute;
+            left: 0;
+            top: 22%;
+            bottom: 22%;
+            width: 2px;
+            border-radius: 1px;
+            background: var(--panel-color);
+            opacity: .45;
         }
-        .mc.wide { grid-column: 1 / -1; }
 
-        .mc-icon  { font-size: 10px; color: var(--panel-color); opacity:.65; margin-bottom:7px; }
-        .mc-label { font-size: 8.5px; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); font-weight:500; margin-bottom:3px; }
-        .mc-val   { font-size: 21px; font-weight:700; letter-spacing:-.5px; line-height:1; color:var(--text); }
-        .mc-val .u { font-size:10px; font-weight:400; color:var(--muted); margin-left:2px; }
-        .mc-note  { font-size:9px; color:var(--muted); margin-top:5px; font-weight:300; }
+        .mc.wide {
+            grid-column: 1 / -1;
+        }
+
+        .mc-icon {
+            font-size: 10px;
+            color: var(--panel-color);
+            opacity: .65;
+            margin-bottom: 7px;
+        }
+
+        .mc-label {
+            font-size: 8.5px;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .mc-val {
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: -.5px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .mc-val .u {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--muted);
+            margin-left: 2px;
+        }
+
+        .mc-note {
+            font-size: 9px;
+            color: var(--muted);
+            margin-top: 5px;
+            font-weight: 300;
+        }
 
         /* barra de progreso */
-        .mc-bar { margin-top:8px; height:2px; border-radius:1px; background:rgba(255,255,255,0.05); overflow:hidden; }
-        .mc-bar-fill { height:100%; border-radius:1px; background:var(--panel-color); opacity:.55; }
+        .mc-bar {
+            margin-top: 8px;
+            height: 2px;
+            border-radius: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .mc-bar-fill {
+            height: 100%;
+            border-radius: 1px;
+            background: var(--panel-color);
+            opacity: .55;
+        }
 
         /* estado ON/OFF/PEND */
-        .mc.s-on   .mc-val { font-size:13px; letter-spacing:1px; color:#4ade80; }
-        .mc.s-off  .mc-val { font-size:13px; letter-spacing:1px; color:#f87171; }
-        .mc.s-pend .mc-val { font-size:13px; letter-spacing:1px; color:#f59e0b; }
+        .mc.s-on .mc-val {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #4ade80;
+        }
+
+        .mc.s-off .mc-val {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #f87171;
+        }
+
+        .mc.s-pend .mc-val {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #f59e0b;
+        }
 
         /* Panel móvil */
         @media (max-width: 600px) {
             .panel {
-                top:auto; bottom:0; width:100%; height:91vh;
-                border-left:none; border-top:2px solid var(--panel-color);
-                border-radius:20px 20px 0 0;
-                transform:translateY(105%);
+                top: auto;
+                bottom: 0;
+                width: 100%;
+                height: 91vh;
+                border-left: none;
+                border-top: 2px solid var(--panel-color);
+                border-radius: 20px 20px 0 0;
+                transform: translateY(105%);
             }
-            .panel.on { transform:translateY(0); }
-            .panel-accent { display:none; }
+
+            .panel.on {
+                transform: translateY(0);
+            }
+
+            .panel-accent {
+                display: none;
+            }
+
             .panel-close-row::before {
-                content:''; position:absolute; top:8px; left:50%; transform:translateX(-50%);
-                width:32px; height:3px; background:rgba(255,255,255,0.09); border-radius:2px;
+                content: '';
+                position: absolute;
+                top: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 32px;
+                height: 3px;
+                background: rgba(255, 255, 255, 0.09);
+                border-radius: 2px;
             }
-            .pd-photo-wrap { height:145px; }
+
+            .pd-photo-wrap {
+                height: 145px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- AVISO DE ORIENTACIÓN -->
-<div class="rotate-notice">
-    <i class="fa-solid fa-mobile-screen-button"></i>
-    <p>Para una mejor experiencia,<br>gira tu dispositivo en modo <strong>horizontal</strong>.</p>
-</div>
+    <!-- AVISO DE ORIENTACIÓN -->
+    <div class="rotate-notice">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        <p>Para una mejor experiencia,<br>gira tu dispositivo en modo <strong>horizontal</strong>.</p>
+    </div>
 
-<div class="app">
-    <div class="map-wrapper" id="map-wrapper">
+    <div class="app">
+        <div class="map-wrapper" id="map-wrapper">
 
-        <!-- Imagen isométrica de la finca -->
-        <img id="farm-img" class="farm-img" src="./finca-isometrica.jpg" alt="Finca Cafetera">
+            <!-- Imagen isométrica de la finca -->
+            <img id="farm-img" class="farm-img" src="./Beneficios del cafe.png" alt="Finca Cafetera">
 
-        <!-- ============================================================
+            <!-- ============================================================
              HOTSPOTS
              data-rel-top  = % vertical   relativo al área renderizada de la imagen
              data-rel-left = % horizontal relativo al área renderizada de la imagen
              
              Para ajustar posiciones precisas: usar hotspot-editor.html
              ============================================================ -->
-        <div class="hotspot" id="hs-gateway"    data-zone="gateway"    data-rel-top="29.72" data-rel-left="30.64" onclick="openPopup('gateway',event)">
-            <div class="hs-pulse"></div>
-            <div class="hs-ring"></div>
-            <div class="hs-core"></div>
-        </div>
-        <div class="hotspot" id="hs-marquesina" data-zone="marquesina" data-rel-top="49.72" data-rel-left="32.56" onclick="openPopup('marquesina',event)">
-            <div class="hs-pulse"></div>
-            <div class="hs-ring"></div>
-            <div class="hs-core"></div>
-        </div>
-        <div class="hotspot" id="hs-beneficio"  data-zone="beneficio"  data-rel-top="47.07" data-rel-left="54.75" onclick="openPopup('beneficio',event)">
-            <div class="hs-pulse"></div>
-            <div class="hs-ring"></div>
-            <div class="hs-core"></div>
-        </div>
-        <div class="hotspot" id="hs-clima"      data-zone="clima"      data-rel-top="28.07" data-rel-left="62.76" onclick="openPopup('clima',event)">
-            <div class="hs-pulse"></div>
-            <div class="hs-ring"></div>
-            <div class="hs-core"></div>
-        </div>
+            <div class="hotspot" id="hs-gateway" data-zone="gateway" data-rel-top="25.20" data-rel-left="30.91"
+                onclick="openPopup('gateway',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-marquesina" data-zone="marquesina" data-rel-top="50.17" data-rel-left="32.86"
+                onclick="openPopup('marquesina',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-beneficio" data-zone="beneficio" data-rel-top="42.55" data-rel-left="56.62"
+                onclick="openPopup('beneficio',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-clima" data-zone="clima" data-rel-top="24.08" data-rel-left="64.43"
+                onclick="openPopup('clima',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-drone" data-zone="drone" data-rel-top="25.42" data-rel-left="45.40"
+                onclick="openPopup('drone',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-restauracion" data-zone="restauracion" data-rel-top="31.47"
+                data-rel-left="59.51" onclick="openPopup('restauracion',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-biodigestor" data-zone="biodigestor" data-rel-top="35.27" data-rel-left="69.03"
+                onclick="openPopup('biodigestor',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-bocatoma" data-zone="bocatoma" data-rel-top="61.70" data-rel-left="62.60"
+                onclick="openPopup('bocatoma',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-conservacion" data-zone="conservacion" data-rel-top="14.67"
+                data-rel-left="48.61" onclick="openPopup('conservacion',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-compostaje" data-zone="compostaje" data-rel-top="72.56" data-rel-left="47.67"
+                onclick="openPopup('compostaje',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
+            <div class="hotspot" id="hs-bodega" data-zone="bodega" data-rel-top="39.75" data-rel-left="25.05"
+                onclick="openPopup('bodega',event)">
+                <div class="hs-pulse"></div>
+                <div class="hs-ring"></div>
+                <div class="hs-core"></div>
+            </div>
 
-        <!-- Popup flotante -->
-        <div id="popup" class="popup"></div>
+            <!-- Popup flotante -->
+            <div id="popup" class="popup"></div>
 
-        <!-- Top bar (dentro del wrapper → position: absolute correcto) -->
-        <div class="top-bar">
-            <div>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fa-solid fa-seedling"></i></div>
-                    <div class="logo-text">InnovaKit <span>/ Sense AI</span></div>
+            <!-- Top bar (dentro del wrapper → position: absolute correcto) -->
+            <div class="top-bar">
+                <div>
+                    <div class="logo">
+                        <div class="logo-icon"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="logo-text">InnovaKit <span>/ Sense AI</span></div>
+                    </div>
+                    <div class="tagline">Ecosistema IoT · Finca Cafetera</div>
                 </div>
-                <div class="tagline">Ecosistema IoT · Finca Cafetera</div>
+                <div class="hint">
+                    <span class="hint-dot"></span>
+                    Toca un punto para ver los equipos
+                </div>
             </div>
-            <div class="hint">
-                <span class="hint-dot"></span>
-                Toca un punto para ver los equipos
+
+            <!-- Bottom bar -->
+            <div class="bottom-bar">
+                <div class="pill" data-zone="gateway" onclick="triggerZone('gateway')"> <i
+                        class="fa-solid fa-tower-broadcast"></i> Conectividad</div>
+                <div class="pill" data-zone="marquesina" onclick="triggerZone('marquesina')"> <i
+                        class="fa-solid fa-temperature-arrow-up"></i> Marquesina</div>
+                <div class="pill" data-zone="beneficio" onclick="triggerZone('beneficio')"> <i
+                        class="fa-solid fa-droplet"></i> Beneficio</div>
+                <div class="pill" data-zone="clima" onclick="triggerZone('clima')"> <i
+                        class="fa-solid fa-cloud-sun-rain"></i> Est. Clima</div>
+                <div class="pill" data-zone="drone" onclick="triggerZone('drone')"> <i
+                        class="fa-solid fa-helicopter"></i> Drone / Satélite</div>
+                <div class="pill" data-zone="restauracion" onclick="triggerZone('restauracion')"> <i
+                        class="fa-solid fa-seedling"></i> Restauración</div>
+                <div class="pill" data-zone="biodigestor" onclick="triggerZone('biodigestor')"> <i
+                        class="fa-solid fa-fire-flame-simple"></i> Biodigestor</div>
+                <div class="pill" data-zone="bocatoma" onclick="triggerZone('bocatoma')"> <i
+                        class="fa-solid fa-faucet"></i> Bocatoma</div>
+                <div class="pill" data-zone="conservacion" onclick="triggerZone('conservacion')"> <i
+                        class="fa-solid fa-tree"></i> Conservación</div>
+                <div class="pill" data-zone="compostaje" onclick="triggerZone('compostaje')"> <i
+                        class="fa-solid fa-recycle"></i> Compostaje</div>
+                <div class="pill" data-zone="bodega" onclick="triggerZone('bodega')"> <i
+                        class="fa-solid fa-warehouse"></i> Bodega</div>
             </div>
-        </div>
 
-        <!-- Bottom bar -->
-        <div class="bottom-bar">
-            <div class="pill" data-zone="gateway"    onclick="triggerZone('gateway')">   <i class="fa-solid fa-tower-broadcast"></i>      La Finca</div>
-            <div class="pill" data-zone="marquesina" onclick="triggerZone('marquesina')"><i class="fa-solid fa-temperature-arrow-up"></i>  Marquesina</div>
-            <div class="pill" data-zone="beneficio"  onclick="triggerZone('beneficio')"> <i class="fa-solid fa-droplet"></i>               Beneficio</div>
-            <div class="pill" data-zone="clima"      onclick="triggerZone('clima')">     <i class="fa-solid fa-cloud-sun-rain"></i>         Est. Clima</div>
-        </div>
+        </div><!-- /map-wrapper -->
 
-    </div><!-- /map-wrapper -->
-
-    <!-- Overlay y panel lateral (position: fixed → fuera del wrapper) -->
-    <div class="overlay" id="overlay" onclick="closePanel()"></div>
-    <div class="panel" id="panel">
-        <div class="panel-accent" id="panel-accent"></div>
-        <div class="panel-close-row">
-            <button class="panel-close-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i></button>
+        <!-- Overlay y panel lateral (position: fixed → fuera del wrapper) -->
+        <div class="overlay" id="overlay" onclick="closePanel()"></div>
+        <div class="panel" id="panel">
+            <div class="panel-accent" id="panel-accent"></div>
+            <div class="panel-close-row">
+                <button class="panel-close-btn" onclick="closePanel()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="panel-body"></div>
         </div>
-        <div id="panel-body"></div>
     </div>
-</div>
 
-<script>
-/* ================================================================
-   BASE DE DATOS DE ZONAS Y DISPOSITIVOS
-   ================================================================ */
-const DATA = {
-    gateway: {
-        color: 'var(--c1)',
-        devices: [{
-            name: 'Gateway IoT', img: './gatewat-iot.jpg.png',
-            icon: 'fa-tower-broadcast',
-            title: 'Gateway IoT', sub: 'Infraestructura de comunicaciones',
-            desc: 'El Gateway IoT es el cerebro de comunicaciones de la finca. Recibe en tiempo real toda la información de los sensores y garantiza transmisión estable hacia la nube mediante LTE/LoRa con redundancia automática.',
-            metrics: [
-                { icon:'fa-cloud',           label:'AWS Sync',         value:'ACTIVO',   unit:'',    note:'Última sync hace 12s',     status:'on'  },
-                { icon:'fa-signal',          label:'Señal 4G',          value:'–87',      unit:'dBm', note:'Cobertura buena',           bar:72  },
-                { icon:'fa-triangle-exclamation', label:'Alertas',      value:'0',        unit:'',    note:'Sin desconexiones',         bar:0   },
-                { icon:'fa-hard-drive',      label:'Almacenamiento',    value:'68',       unit:'GB',  note:'4 semanas guardadas',       bar:68  },
-                { icon:'fa-wifi',            label:'WiFi Local',        value:'ACTIVO',   unit:'',    note:'Red InnovaKit-Farm',        status:'on'  },
-                { icon:'fa-tower-cell',      label:'LoRaWAN',           value:'PEND.',    unit:'',    note:'En implementación',         status:'off' }
-            ]
-        }]
-    },
-    marquesina: {
-        color: 'var(--c2)',
-        devices: [
-            {
-                name: 'Secafé', img: './secafe.jpg.png',
-                icon: 'fa-scale-balanced',
-                title: 'Secafé', sub: 'Medición de humedad y peso',
-                desc: 'Sistema avanzado de medición de humedad y peso diseñado para el proceso de secado del café. Proporciona control exacto con alertas automáticas al alcanzar umbrales óptimos.',
-                metrics: [
-                    { icon:'fa-thermometer-half',      label:'Temperatura',       value:'22',   unit:'°C',  note:'Interior marquesina',        bar:44 },
-                    { icon:'fa-droplet',               label:'Humedad Grano',     value:'45',   unit:'%',   note:'↓ 14% = sobredisecado',      bar:45 },
-                    { icon:'fa-weight-hanging',        label:'Peso Muestra',      value:'270',  unit:'g',   note:'Muestra representativa',     bar:54 },
-                    { icon:'fa-hourglass-half',        label:'Tiempo Transcurrido', value:'6',  unit:'días',note:'Ciclo en curso',             bar:43 },
-                    { icon:'fa-clock',                 label:'Tiempo Restante',   value:'~8',   unit:'días',note:'Est. punto óptimo',          bar:57 },
-                    { icon:'fa-battery-three-quarters',label:'Batería',           value:'82',   unit:'%',   note:'Estado normal',              bar:82 }
+    <script>
+        /* ================================================================
+           BASE DE DATOS DE ZONAS Y DISPOSITIVOS
+           ================================================================ */
+        const DATA = {
+            gateway: {
+                color: 'var(--c1)',
+                devices: [
+                    {
+                        name: 'Gateway IoT', img: './gatewat-iot.jpg.png',
+                        icon: 'fa-tower-broadcast',
+                        title: 'Gateway IoT', sub: 'Infraestructura de comunicaciones',
+                        desc: 'El Gateway IoT es el cerebro de comunicaciones de la finca. Recibe en tiempo real toda la información de los sensores y garantiza transmisión estable hacia la nube mediante LTE/LoRa con redundancia automática.',
+                        metrics: [
+                            { icon: 'fa-cloud', label: 'AWS Sync', value: 'ACTIVO', unit: '', note: 'Última sync hace 12s', status: 'on' },
+                            { icon: 'fa-signal', label: 'Señal 4G', value: '–87', unit: 'dBm', note: 'Cobertura buena', bar: 72 },
+                            { icon: 'fa-triangle-exclamation', label: 'Alertas', value: '0', unit: '', note: 'Sin desconexiones', bar: 0 },
+                            { icon: 'fa-hard-drive', label: 'Almacenamiento', value: '68', unit: 'GB', note: '4 semanas guardadas', bar: 68 },
+                            { icon: 'fa-wifi', label: 'WiFi Local', value: 'ACTIVO', unit: '', note: 'Red InnovaKit-Farm', status: 'on' },
+                            { icon: 'fa-tower-cell', label: 'LoRaWAN', value: 'PEND.', unit: '', note: 'En implementación', status: 'off' }
+                        ]
+                    },
+                    {
+                        name: 'Starlink', img: 'https://placehold.co/400x175/26C6DA/FFFFFF?text=Starlink',
+                        icon: 'fa-satellite-dish',
+                        title: 'Starlink', sub: 'Conectividad satelital',
+                        desc: '',
+                        metrics: []
+                    }
                 ]
             },
-            {
-                name: 'Sense Atmos', img: './sense-atmos.jpg.png',
-                icon: 'fa-temperature-half',
-                title: 'Sense Atmos', sub: 'Automatización de clima interior',
-                desc: 'Sensor ambiental con control autónomo de ventilación. Enciende/apaga el extractor según condiciones, optimizando el proceso de secado sin intervención manual.',
-                metrics: [
-                    { icon:'fa-thermometer-half', label:'Temperatura',  value:'28',  unit:'°C',   note:'Interior marquesina', bar:56 },
-                    { icon:'fa-droplet',          label:'Humedad',      value:'72',  unit:'%HR',  note:'Ambiente interior',   bar:72 },
-                    { icon:'fa-fan',              label:'Ventilador',   value:'ON',  unit:'',     note:'Activado automático', status:'on' },
-                    { icon:'fa-battery-full',     label:'Batería',      value:'94',  unit:'%',    note:'Carga completa',      bar:94 }
+            marquesina: {
+                color: 'var(--c2)',
+                devices: [
+                    {
+                        name: 'Secafé', img: './secafe.jpg.png',
+                        icon: 'fa-scale-balanced',
+                        title: 'Secafé', sub: 'Medición de humedad y peso',
+                        desc: 'Sistema avanzado de medición de humedad y peso diseñado para el proceso de secado del café. Proporciona control exacto con alertas automáticas al alcanzar umbrales óptimos.',
+                        metrics: [
+                            { icon: 'fa-thermometer-half', label: 'Temperatura', value: '22', unit: '°C', note: 'Interior marquesina', bar: 44 },
+                            { icon: 'fa-droplet', label: 'Humedad Grano', value: '45', unit: '%', note: '↓ 14% = sobredisecado', bar: 45 },
+                            { icon: 'fa-weight-hanging', label: 'Peso Muestra', value: '270', unit: 'g', note: 'Muestra representativa', bar: 54 },
+                            { icon: 'fa-hourglass-half', label: 'Tiempo Transcurrido', value: '6', unit: 'días', note: 'Ciclo en curso', bar: 43 },
+                            { icon: 'fa-clock', label: 'Tiempo Restante', value: '~8', unit: 'días', note: 'Est. punto óptimo', bar: 57 },
+                            { icon: 'fa-battery-three-quarters', label: 'Batería', value: '82', unit: '%', note: 'Estado normal', bar: 82 }
+                        ]
+                    },
+                    {
+                        name: 'Sense Atmos', img: './sense-atmos.jpg.png',
+                        icon: 'fa-temperature-half',
+                        title: 'Sense Atmos', sub: 'Automatización de clima interior',
+                        desc: 'Sensor ambiental con control autónomo de ventilación. Enciende/apaga el extractor según condiciones, optimizando el proceso de secado sin intervención manual.',
+                        metrics: [
+                            { icon: 'fa-thermometer-half', label: 'Temperatura', value: '28', unit: '°C', note: 'Interior marquesina', bar: 56 },
+                            { icon: 'fa-droplet', label: 'Humedad', value: '72', unit: '%HR', note: 'Ambiente interior', bar: 72 },
+                            { icon: 'fa-fan', label: 'Ventilador', value: 'ON', unit: '', note: 'Activado automático', status: 'on' },
+                            { icon: 'fa-battery-full', label: 'Batería', value: '94', unit: '%', note: 'Carga completa', bar: 94 }
+                        ]
+                    }
+                ]
+            },
+            beneficio: {
+                color: 'var(--c3)',
+                devices: [
+                    {
+                        name: 'Sense Flow', img: './sense-flow.jpg.png',
+                        icon: 'fa-water',
+                        title: 'Sense Flow', sub: 'Caudalímetro de precisión',
+                        desc: 'Medición exacta del caudal de entrada al proceso de beneficio. Garantiza control estricto del uso de agua con registro histórico para certificaciones de sostenibilidad.',
+                        metrics: [
+                            { icon: 'fa-faucet', label: 'Caudal Actual', value: '3.8', unit: 'L/min', note: 'Flujo en proceso', bar: 38 },
+                            { icon: 'fa-cubes-stacked', label: 'Volumen Hoy', value: '1.240', unit: 'L', note: 'Acumulado del día', bar: 62 },
+                            { icon: 'fa-rotate', label: 'Eventos Uso', value: '3', unit: 'ingresos', note: 'Desde las 6 am', bar: 60 },
+                            { icon: 'fa-circle-dot', label: 'Válvula', value: 'ABIERTA', unit: '', note: 'Control remoto activo', status: 'on' },
+                            { icon: 'fa-battery-half', label: 'Batería', value: '61', unit: '%', note: 'Nivel aceptable', bar: 61 }
+                        ]
+                    },
+                    {
+                        name: 'Válvula Inteligente', img: 'https://placehold.co/300x175/E53935/FFFFFF?text=Válvula',
+                        icon: 'fa-faucet-drip',
+                        title: 'Válvula Inteligente', sub: 'Control de flujo de agua',
+                        desc: 'Válvula automatizada interconectada al Sense Flow. Ejecuta cortes de flujo remotamente o por reglas automáticas configurables desde la nube.',
+                        metrics: [
+                            { icon: 'fa-toggle-on', label: 'Estado', value: 'Abierta', status: 'on' },
+                            { icon: 'fa-percent', label: 'Apertura', value: '94', unit: '%', bar: 94 },
+                            { icon: 'fa-bolt', label: 'Solenoide', value: 'OK', status: 'on' },
+                            { icon: 'fa-hourglass-start', label: 'Última Acción', value: '2 min', note: 'Reciente' },
+                            { icon: 'fa-signal', label: 'Conexión', value: 'Conectada', status: 'on' },
+                            { icon: 'fa-history', label: 'Ciclos Hoy', value: '23', note: 'Normal' }
+                        ]
+                    },
+                    {
+                        name: 'Atmos View', img: './sense-atmos-view.jpg.png',
+                        icon: 'fa-display',
+                        title: 'Sense Atmos View', sub: 'Monitor local de condiciones',
+                        desc: 'Sensor con pantalla integrada para lectura inmediata de temperatura y humedad en lavado y fermentación, sin necesidad de consultar dispositivos.',
+                        metrics: [
+                            { icon: 'fa-thermometer-half', label: 'Temperatura', value: '22', unit: '°C', note: 'Fase fermentación', bar: 44 },
+                            { icon: 'fa-droplet', label: 'Humedad', value: '74', unit: '%HR', note: 'Ambiente beneficio', bar: 74 },
+                            { icon: 'fa-battery-three-quarters', label: 'Batería', value: '78', unit: '%', note: 'Estado normal', bar: 78 }
+                        ]
+                    }
+                ]
+            },
+            clima: {
+                color: 'var(--c4)',
+                devices: [{
+                    name: 'Sense Weather', img: './sense-weather.jpg.png',
+                    icon: 'fa-cloud-sun-rain',
+                    title: 'Sense Weather', sub: 'Estación Meteorológica Integrada',
+                    desc: 'Estación meteorológica profesional que monitorea todas las variables climáticas. Integración con alertas automáticas y pronósticos algorítmicos para toma de decisiones.',
+                    metrics: [
+                        { icon: 'fa-thermometer', label: 'Temperatura', value: '24.8', unit: '°C', bar: 62 },
+                        { icon: 'fa-droplet', label: 'Humedad', value: '71', unit: '%', bar: 71 },
+                        { icon: 'fa-wind', label: 'Vel. Viento', value: '3.2', unit: 'm/s', bar: 53 },
+                        { icon: 'fa-compass', label: 'Dir. Viento', value: 'SE', note: '134°' },
+                        { icon: 'fa-cloud-rain', label: 'Precipitación', value: '2.4', unit: 'mm', bar: 24 },
+                        { icon: 'fa-sun', label: 'Radiación UV', value: '6.2', unit: 'índice', bar: 62 },
+                        { icon: 'fa-bolt', label: 'Energía Solar', value: '654', unit: 'W/m²', bar: 65 },
+                        { icon: 'fa-eye', label: 'Visibilidad', value: '10', unit: 'km', bar: 83 }
+                    ]
+                }]
+            },
+            /* ── Hotspots nuevos v2 ─────────────────────────────────────── */
+            drone: {
+                color: 'var(--c5)',
+                devices: [{
+                    name: 'Drone / Satélite', img: 'https://placehold.co/400x175/9B59B6/FFFFFF?text=Drone+%2F+Satélite',
+                    icon: 'fa-helicopter',
+                    title: 'Drone & Cobertura Satelital', sub: 'Monitoreo aéreo de la finca',
+                    desc: 'Drone autónomo que realiza vuelos programados sobre la finca para captura de imágenes multiespectrales. Integrado con imágenes satelitales para análisis de cobertura vegetal, vigor del cultivo y detección temprana de estrés hídrico.',
+                    metrics: [
+                        { icon: 'fa-battery-three-quarters', label: 'Batería Drone', value: '78', unit: '%', note: 'Lista para vuelo', bar: 78 },
+                        { icon: 'fa-map', label: 'Área Mapeada', value: '4.2', unit: 'ha', note: 'Último vuelo — ayer', bar: 84 },
+                        { icon: 'fa-satellite', label: 'Cobertura NDVI', value: '0.72', unit: 'idx', note: 'Vigor alto', bar: 72 },
+                        { icon: 'fa-clock', label: 'Próximo Vuelo', value: '06:30', unit: '', note: 'Programado mañana' },
+                        { icon: 'fa-cloud-sun', label: 'Condición Vuelo', value: 'APTA', unit: '', note: 'Viento < 20 km/h', status: 'on' },
+                        { icon: 'fa-camera', label: 'Fotos Tomadas', value: '342', unit: 'imgs', note: 'Alta resolución' }
+                    ]
+                }]
+            },
+            restauracion: {
+                color: 'var(--c6)',
+                devices: [{
+                    name: 'Zona de Restauración', img: 'https://placehold.co/400x175/27AE60/FFFFFF?text=Restauración',
+                    icon: 'fa-seedling',
+                    title: 'Área de Restauración', sub: 'Terrazas con cultivos y monitoreo',
+                    desc: 'Zona con terrazas de cultivo en proceso de restauración ecológica. Integra dendrómetros digitales para medir crecimiento de árboles, sensores de humedad de suelo y seguimiento de biodiversidad por parcela.',
+                    metrics: [
+                        { icon: 'fa-tree', label: 'Árboles Sembrados', value: '248', unit: '', note: 'Meta: 300 — 82%', bar: 82 },
+                        { icon: 'fa-ruler', label: 'Crecimiento Semanal', value: '1.4', unit: 'cm', note: 'Promedio última semana', bar: 56 },
+                        { icon: 'fa-droplet', label: 'Humedad Suelo', value: '62', unit: '%', note: 'Nivel óptimo', bar: 62 },
+                        { icon: 'fa-leaf', label: 'Cobertura Vegetal', value: '74', unit: '%', note: '↑ +8% vs mes anterior', bar: 74 },
+                        { icon: 'fa-temperature-half', label: 'Temperatura', value: '21', unit: '°C', note: 'Microclima activo', bar: 42 },
+                        { icon: 'fa-chart-line', label: 'Índice Restauración', value: '0.81', unit: '', note: 'Estado: Bueno', bar: 81 }
+                    ]
+                }]
+            },
+            biodigestor: {
+                color: 'var(--c7)',
+                devices: [{
+                    name: 'Sistema Biodigestor', img: 'https://placehold.co/400x175/E67E22/FFFFFF?text=Biodigestor',
+                    icon: 'fa-fire-flame-simple',
+                    title: 'Biodigestor', sub: 'Producción de biogás y biol',
+                    desc: 'Dos tanques cilíndricos que procesan residuos orgánicos de la finca (pulpa de café, aguas mieles) para producir biogás utilizado en cocinas y biol como fertilizante líquido orgánico.',
+                    metrics: [
+                        { icon: 'fa-gauge', label: 'Presión Tanque', value: '1.4', unit: 'bar', note: 'Rango normal: 1-2 bar', bar: 70 },
+                        { icon: 'fa-fire', label: 'Producción Biogás', value: '3.2', unit: 'm³/d', note: 'Promedio diario', bar: 64 },
+                        { icon: 'fa-thermometer-half', label: 'Temp. Digestión', value: '36', unit: '°C', note: 'Zona mesofílica óptima', bar: 60 },
+                        { icon: 'fa-flask', label: 'Biol Producido', value: '120', unit: 'L/sem', note: 'Fertilizante listo', bar: 80 },
+                        { icon: 'fa-rotate', label: 'Ciclo Digestión', value: '28', unit: 'días', note: 'Fase activa', bar: 70 },
+                        { icon: 'fa-recycle', label: 'Residuos Procesados', value: '85', unit: 'kg/d', note: 'Pulpa café + biomasa', bar: 85 }
+                    ]
+                }]
+            },
+            bocatoma: {
+                color: 'var(--c8)',
+                devices: [{
+                    name: 'Bocatoma del Río', img: 'https://placehold.co/400x175/2980B9/FFFFFF?text=Bocatoma',
+                    icon: 'fa-faucet',
+                    title: 'Bocatoma', sub: 'Estructura de captación hídrica',
+                    desc: 'Estructura sobre el río que capta el agua para uso en el beneficio húmedo. Integra sensores de nivel, caudal y turbidez para garantizar la disponibilidad de agua limpia y el cumplimiento de las concesiones hídricas.',
+                    metrics: [
+                        { icon: 'fa-water', label: 'Caudal Captado', value: '8.4', unit: 'L/s', note: 'Concesión: 12 L/s', bar: 70 },
+                        { icon: 'fa-ruler-vertical', label: 'Nivel Río', value: '1.24', unit: 'm', note: 'Nivel normal', bar: 62 },
+                        { icon: 'fa-eye-dropper', label: 'Turbidez', value: '4.2', unit: 'NTU', note: 'Agua apta para proceso', bar: 21 },
+                        { icon: 'fa-clock', label: 'Horas Bombeo', value: '6.5', unit: 'h', note: 'Hoy', bar: 54 },
+                        { icon: 'fa-circle-dot', label: 'Compuerta', value: 'ABIERTA', unit: '', note: 'Apertura 70%', status: 'on' },
+                        { icon: 'fa-chart-line', label: 'Tendencia Nivel', value: '↑', unit: '', note: 'Subiendo levemente' }
+                    ]
+                }]
+            },
+            conservacion: {
+                color: 'var(--c9)',
+                devices: [{
+                    name: 'Cámara de Fauna', img: 'https://placehold.co/400x175/1ABC9C/111111?text=Cámara+Trampa',
+                    icon: 'fa-camera',
+                    title: 'Cámara de Detección de Fauna', sub: 'Monitoreo de biodiversidad — Próximamente',
+                    desc: 'Cámara trampa instalada en árboles del área boscosa para detección y registro de fauna silvestre. Información y fotografías en configuración.',
+                    metrics: []
+                }]
+            },
+            compostaje: {
+                color: 'var(--c10)',
+                devices: [
+                    {
+                        name: 'Báscula Inteligente', img: 'https://placehold.co/400x175/C0892B/FFFFFF?text=Báscula',
+                        icon: 'fa-weight-hanging',
+                        title: 'Báscula Inteligente', sub: 'Monitoreo de peso en tiempo real',
+                        desc: 'Báscula digital conectada instalada en el área de compostaje. Registra el peso actual de cada pila y detecta cambios a lo largo del tiempo para monitorear la evolución del proceso y calcular la producción final de abono orgánico.',
+                        metrics: [
+                            { icon: 'fa-weight-hanging', label: 'Peso Actual', value: '840', unit: 'kg', note: 'Pila principal activa', bar: 84 },
+                            { icon: 'fa-arrow-trend-down', label: 'Cambio 24h', value: '−12', unit: 'kg', note: 'Pérdida de humedad', bar: 48 },
+                            { icon: 'fa-chart-line', label: 'Cambio Semanal', value: '−65', unit: 'kg', note: 'Proceso normal', bar: 35 },
+                            { icon: 'fa-seedling', label: 'Abono Listo', value: '320', unit: 'kg', note: 'Madurado — listo', bar: 64 },
+                            { icon: 'fa-box', label: 'Cajones Activos', value: '3', unit: '', note: 'De 4 disponibles', bar: 75 },
+                            { icon: 'fa-battery-full', label: 'Batería Báscula', value: '97', unit: '%', note: 'Carga completa', bar: 97 }
+                        ]
+                    },
+                    {
+                        name: 'Sense Atmos', img: './sense-atmos.jpg.png',
+                        icon: 'fa-temperature-half',
+                        title: 'Sense Atmos — Compostaje', sub: 'Temperatura y humedad del proceso',
+                        desc: 'Sensor ambiental instalado en la zona de compostaje para monitorear continuamente la temperatura y humedad de las pilas. Permite detectar fases del proceso (mesofílica / termofílica) y optimizar las volteos.',
+                        metrics: [
+                            { icon: 'fa-thermometer-half', label: 'Temperatura Pila', value: '58', unit: '°C', note: 'Fase termofílica activa', bar: 77 },
+                            { icon: 'fa-droplet', label: 'Humedad', value: '55', unit: '%', note: 'Óptima: 50-60%', bar: 55 },
+                            { icon: 'fa-calendar', label: 'Días Proceso', value: '18', unit: 'días', note: 'Ciclo en curso', bar: 60 },
+                            { icon: 'fa-fan', label: 'Ventilación', value: 'ON', unit: '', note: 'Auto-activada', status: 'on' },
+                            { icon: 'fa-battery-three-quarters', label: 'Batería', value: '81', unit: '%', note: 'Estado normal', bar: 81 }
+                        ]
+                    }
+                ]
+            },
+            bodega: {
+                color: 'var(--c11)',
+                devices: [
+                    {
+                        name: 'Atmos View — Puerta', img: './sense-atmos-view.jpg.png',
+                        icon: 'fa-door-open',
+                        title: 'Sense Atmos View', sub: 'Monitor ambiental + sensor de puerta',
+                        desc: 'Sensor Atmos View instalado en la bodega con módulo adicional de apertura y cierre de puerta. Monitorea las condiciones ambientales internas y registra cada evento de acceso para control de seguridad e inventario.',
+                        metrics: [
+                            { icon: 'fa-door-open', label: 'Estado Puerta', value: 'CERRADA', unit: '', note: 'Según último registro', status: 'off' },
+                            { icon: 'fa-rotate', label: 'Aperturas Hoy', value: '7', unit: 'veces', note: 'Accesos del día', bar: 35 },
+                            { icon: 'fa-clock-rotate-left', label: 'Últ. Apertura', value: '10:42', unit: 'AM', note: 'Hace 4h 28min' },
+                            { icon: 'fa-clock', label: 'Últ. Cierre', value: '10:56', unit: 'AM', note: 'Hace 4h 14min' },
+                            { icon: 'fa-thermometer-half', label: 'Temp. Interior', value: '20', unit: '°C', note: 'Rango normal', bar: 50 },
+                            { icon: 'fa-droplet', label: 'Humedad', value: '58', unit: '%HR', note: 'Condición óptima', bar: 58 }
+                        ]
+                    }
                 ]
             }
-        ]
-    },
-    beneficio: {
-        color: 'var(--c3)',
-        devices: [
-            {
-                name: 'Sense Flow', img: './sense-flow.jpg.png',
-                icon: 'fa-water',
-                title: 'Sense Flow', sub: 'Caudalímetro de precisión',
-                desc: 'Medición exacta del caudal de entrada al proceso de beneficio. Garantiza control estricto del uso de agua con registro histórico para certificaciones de sostenibilidad.',
-                metrics: [
-                    { icon:'fa-faucet',           label:'Caudal Actual',  value:'3.8',   unit:'L/min', note:'Flujo en proceso',       bar:38 },
-                    { icon:'fa-cubes-stacked',    label:'Volumen Hoy',    value:'1.240', unit:'L',     note:'Acumulado del día',      bar:62 },
-                    { icon:'fa-rotate',           label:'Eventos Uso',    value:'3',     unit:'ingresos', note:'Desde las 6 am',     bar:60 },
-                    { icon:'fa-circle-dot',       label:'Válvula',        value:'ABIERTA', unit:'',   note:'Control remoto activo',  status:'on' },
-                    { icon:'fa-battery-half',     label:'Batería',        value:'61',    unit:'%',     note:'Nivel aceptable',        bar:61 }
-                ]
-            },
-            {
-                name: 'Válvula Inteligente', img: 'https://placehold.co/300x175/E53935/FFFFFF?text=Válvula',
-                icon: 'fa-faucet-drip',
-                title: 'Válvula Inteligente', sub: 'Control de flujo de agua',
-                desc: 'Válvula automatizada interconectada al Sense Flow. Ejecuta cortes de flujo remotamente o por reglas automáticas configurables desde la nube.',
-                metrics: [
-                    { icon: 'fa-toggle-on', label: 'Estado', value: 'Abierta', status: 'on' },
-                    { icon: 'fa-percent', label: 'Apertura', value: '94', unit: '%', bar: 94 },
-                    { icon: 'fa-bolt', label: 'Solenoide', value: 'OK', status: 'on' },
-                    { icon: 'fa-hourglass-start', label: 'Última Acción', value: '2 min', note: 'Reciente' },
-                    { icon: 'fa-signal', label: 'Conexión', value: 'Conectada', status: 'on' },
-                    { icon: 'fa-history', label: 'Ciclos Hoy', value: '23', note: 'Normal' }
-                ]
-            },
-            {
-                name: 'Atmos View', img: './sense-atmos-view.jpg.png',
-                icon: 'fa-display',
-                title: 'Sense Atmos View', sub: 'Monitor local de condiciones',
-                desc: 'Sensor con pantalla integrada para lectura inmediata de temperatura y humedad en lavado y fermentación, sin necesidad de consultar dispositivos.',
-                metrics: [
-                    { icon:'fa-thermometer-half',      label:'Temperatura', value:'22',  unit:'°C',   note:'Fase fermentación',  bar:44 },
-                    { icon:'fa-droplet',               label:'Humedad',     value:'74',  unit:'%HR',  note:'Ambiente beneficio', bar:74 },
-                    { icon:'fa-battery-three-quarters',label:'Batería',     value:'78',  unit:'%',    note:'Estado normal',      bar:78 }
-                ]
+        };
+
+        /* ================================================================
+           POSICIONAMIENTO PRECISO DE HOTSPOTS
+           ================================================================
+           
+           PROBLEMA: Los hotspots llevan coordenadas (data-rel-top, data-rel-left)
+           como % relativos al área VISUAL de la imagen, no al map-wrapper.
+           Con object-fit: contain, la imagen puede tener barras (letterboxing)
+           arriba/abajo o izquierda/derecha. Los % del wrapper no coinciden.
+        
+           SOLUCIÓN: Calcular el área renderizada de la imagen dentro del wrapper
+           usando las dimensiones nativas (naturalWidth, naturalHeight) y convertir
+           los % relativos a la imagen en píxeles absolutos dentro del wrapper.
+           
+           Se recalcula en cada resize mediante ResizeObserver.
+           ================================================================ */
+        const img = document.getElementById('farm-img');
+        const wrapper = document.getElementById('map-wrapper');
+
+        function getImageBounds() {
+            const wW = wrapper.offsetWidth;
+            const wH = wrapper.offsetHeight;
+            // Usa dimensiones nativas; fallback al tamaño renderizado
+            const iW = img.naturalWidth || img.offsetWidth;
+            const iH = img.naturalHeight || img.offsetHeight;
+
+            if (!iW || !iH) return { rW: wW, rH: wH, ox: 0, oy: 0 };
+
+            const wRatio = wW / wH;
+            const iRatio = iW / iH;
+
+            let rW, rH, ox, oy;
+            if (iRatio > wRatio) {
+                // Imagen más ancha → letterbox vertical (barras arriba y abajo)
+                rW = wW;
+                rH = wW / iRatio;
+                ox = 0;
+                oy = (wH - rH) / 2;
+            } else {
+                // Imagen más alta → letterbox horizontal (barras izq y der)
+                rH = wH;
+                rW = wH * iRatio;
+                oy = 0;
+                ox = (wW - rW) / 2;
             }
-        ]
-    },
-    clima: {
-        color: 'var(--c4)',
-        devices: [{
-            name: 'Sense Weather', img: './sense-weather.jpg.png',
-            icon: 'fa-cloud-sun-rain',
-            title: 'Sense Weather', sub: 'Estación Meteorológica Integrada',
-            desc: 'Estación meteorológica profesional que monitorea todas las variables climáticas. Integración con alertas automáticas y pronósticos algorítmicos para toma de decisiones.',
-            metrics: [
-                { icon: 'fa-thermometer', label: 'Temperatura', value: '24.8', unit: '°C', bar: 62 },
-                { icon: 'fa-droplet', label: 'Humedad', value: '71', unit: '%', bar: 71 },
-                { icon: 'fa-wind', label: 'Velocidad Viento', value: '3.2', unit: 'm/s', bar: 53 },
-                { icon: 'fa-compass', label: 'Dirección Viento', value: 'SE', note: '134°' },
-                { icon: 'fa-cloud-rain', label: 'Precipitación', value: '2.4', unit: 'mm', bar: 24 },
-                { icon: 'fa-sun', label: 'Radiación UV', value: '6.2', unit: 'índice', bar: 62 },
-                { icon: 'fa-bolt', label: 'Energía Solar', value: '654', unit: 'W/m²', bar: 65 },
-                { icon: 'fa-eye', label: 'Visibilidad', value: '10', unit: 'km', bar: 83 }
-            ]
-        }]
-    }
-};
+            return { rW, rH, ox, oy };
+        }
 
-/* ================================================================
-   POSICIONAMIENTO PRECISO DE HOTSPOTS
-   ================================================================
-   
-   PROBLEMA: Los hotspots llevan coordenadas (data-rel-top, data-rel-left)
-   como % relativos al área VISUAL de la imagen, no al map-wrapper.
-   Con object-fit: contain, la imagen puede tener barras (letterboxing)
-   arriba/abajo o izquierda/derecha. Los % del wrapper no coinciden.
+        function positionAll() {
+            const { rW, rH, ox, oy } = getImageBounds();
+            document.querySelectorAll('.hotspot').forEach(hs => {
+                const relT = parseFloat(hs.dataset.relTop) / 100;
+                const relL = parseFloat(hs.dataset.relLeft) / 100;
+                hs.style.top = (oy + relT * rH) + 'px';
+                hs.style.left = (ox + relL * rW) + 'px';
+                hs.classList.add('ready');
+            });
+        }
 
-   SOLUCIÓN: Calcular el área renderizada de la imagen dentro del wrapper
-   usando las dimensiones nativas (naturalWidth, naturalHeight) y convertir
-   los % relativos a la imagen en píxeles absolutos dentro del wrapper.
-   
-   Se recalcula en cada resize mediante ResizeObserver.
-   ================================================================ */
-const img     = document.getElementById('farm-img');
-const wrapper = document.getElementById('map-wrapper');
+        // Posicionar al cargar la imagen
+        img.addEventListener('load', positionAll);
+        if (img.complete && img.naturalWidth) positionAll();
 
-function getImageBounds() {
-    const wW = wrapper.offsetWidth;
-    const wH = wrapper.offsetHeight;
-    // Usa dimensiones nativas; fallback al tamaño renderizado
-    const iW = img.naturalWidth  || img.offsetWidth;
-    const iH = img.naturalHeight || img.offsetHeight;
+        // Reposicionar en cada cambio de tamaño (zoom, rotate, resize)
+        const ro = new ResizeObserver(positionAll);
+        ro.observe(wrapper);
 
-    if (!iW || !iH) return { rW: wW, rH: wH, ox: 0, oy: 0 };
+        /* ================================================================
+           LÓGICA DE UI
+           ================================================================ */
+        const popup = document.getElementById('popup');
+        const panel = document.getElementById('panel');
+        const overlay = document.getElementById('overlay');
+        const body = document.getElementById('panel-body');
+        const accent = document.getElementById('panel-accent');
 
-    const wRatio = wW / wH;
-    const iRatio = iW / iH;
+        function openPopup(zoneId, e) {
+            e.stopPropagation();
+            const zone = DATA[zoneId];
+            if (!zone) return;
 
-    let rW, rH, ox, oy;
-    if (iRatio > wRatio) {
-        // Imagen más ancha → letterbox vertical (barras arriba y abajo)
-        rW = wW;
-        rH = wW / iRatio;
-        ox = 0;
-        oy = (wH - rH) / 2;
-    } else {
-        // Imagen más alta → letterbox horizontal (barras izq y der)
-        rH = wH;
-        rW = wH * iRatio;
-        oy = 0;
-        ox = (wW - rW) / 2;
-    }
-    return { rW, rH, ox, oy };
-}
-
-function positionAll() {
-    const { rW, rH, ox, oy } = getImageBounds();
-    document.querySelectorAll('.hotspot').forEach(hs => {
-        const relT = parseFloat(hs.dataset.relTop)  / 100;
-        const relL = parseFloat(hs.dataset.relLeft) / 100;
-        hs.style.top  = (oy + relT * rH) + 'px';
-        hs.style.left = (ox + relL * rW) + 'px';
-        hs.classList.add('ready');
-    });
-}
-
-// Posicionar al cargar la imagen
-img.addEventListener('load', positionAll);
-if (img.complete && img.naturalWidth) positionAll();
-
-// Reposicionar en cada cambio de tamaño (zoom, rotate, resize)
-const ro = new ResizeObserver(positionAll);
-ro.observe(wrapper);
-
-/* ================================================================
-   LÓGICA DE UI
-   ================================================================ */
-const popup   = document.getElementById('popup');
-const panel   = document.getElementById('panel');
-const overlay = document.getElementById('overlay');
-const body    = document.getElementById('panel-body');
-const accent  = document.getElementById('panel-accent');
-
-function openPopup(zoneId, e) {
-    e.stopPropagation();
-    const zone = DATA[zoneId];
-    if (!zone) return;
-
-    popup.innerHTML = zone.devices.map((d, i) => `
+            popup.innerHTML = zone.devices.map((d, i) => `
         <div class="dev-card" onclick="openPanel('${zoneId}',${i},event)">
             <img src="${d.img}" alt="${d.name}" onerror="this.src='https://placehold.co/100x100/111/888?text=·'">
             <span>${d.name}</span>
         </div>
     `).join('');
 
-    popup.style.borderTopColor = zone.color;
+            popup.style.borderTopColor = zone.color;
 
-    // Posición bajo el hotspot
-    const hs = e.currentTarget;
-    popup.style.top  = hs.style.top;
-    popup.style.left = hs.style.left;
+            // Posición bajo el hotspot
+            const hs = e.currentTarget;
+            popup.style.top = hs.style.top;
+            popup.style.left = hs.style.left;
 
-    popup.classList.add('show');
-}
+            popup.classList.add('show');
+        }
 
-function openPanel(zoneId, idx, e) {
-    e?.stopPropagation();
-    popup.classList.remove('show');
+        function openPanel(zoneId, idx, e) {
+            e?.stopPropagation();
+            popup.classList.remove('show');
 
-    const zone   = DATA[zoneId];
-    const device = zone.devices[idx];
+            const zone = DATA[zoneId];
+            const device = zone.devices[idx];
 
-    panel.style.setProperty('--panel-color', zone.color);
-    accent.style.background = `linear-gradient(90deg,${zone.color},transparent)`;
+            panel.style.setProperty('--panel-color', zone.color);
+            accent.style.background = `linear-gradient(90deg,${zone.color},transparent)`;
 
-    // — Construir tarjetas de métricas —
-    const metricsHTML = device.metrics.map(m => {
-        const isStatus = m.status !== undefined;
-        const cls = isStatus
-            ? (m.status === 'on'  ? 'mc s-on'
-             : m.status === 'off' ? 'mc s-off'
-             : 'mc s-pend')
-            : 'mc';
-        const barHTML = (!isStatus && m.bar !== undefined && m.bar > 0)
-            ? `<div class="mc-bar"><div class="mc-bar-fill" style="width:${m.bar}%"></div></div>` : '';
-        return `
+            // — Construir tarjetas de métricas —
+            const metricsHTML = device.metrics.map(m => {
+                const isStatus = m.status !== undefined;
+                const cls = isStatus
+                    ? (m.status === 'on' ? 'mc s-on'
+                        : m.status === 'off' ? 'mc s-off'
+                            : 'mc s-pend')
+                    : 'mc';
+                const barHTML = (!isStatus && m.bar !== undefined && m.bar > 0)
+                    ? `<div class="mc-bar"><div class="mc-bar-fill" style="width:${m.bar}%"></div></div>` : '';
+                return `
         <div class="${cls}">
             <div class="mc-icon"><i class="fa-solid ${m.icon}"></i></div>
             <div class="mc-label">${m.label}</div>
@@ -812,15 +1469,15 @@ function openPanel(zoneId, idx, e) {
             ${m.note ? `<div class="mc-note">${m.note}</div>` : ''}
             ${barHTML}
         </div>`;
-    }).join('');
+            }).join('');
 
-    // — Grid según cantidad de métricas —
-    const count = device.metrics.length;
-    const gridClass = count <= 2 ? 'metrics-grid g1'
-                    : count === 3 ? 'metrics-grid g3'
+            // — Grid según cantidad de métricas —
+            const count = device.metrics.length;
+            const gridClass = count <= 2 ? 'metrics-grid g1'
+                : count === 3 ? 'metrics-grid g3'
                     : 'metrics-grid';
 
-    body.innerHTML = `
+            body.innerHTML = `
         <div class="pd-header">
             <div class="pd-icon"><i class="fa-solid ${device.icon}"></i></div>
             <div>
@@ -845,24 +1502,25 @@ function openPanel(zoneId, idx, e) {
         </div>
     `;
 
-    panel.classList.add('on');
-    overlay.classList.add('on');
-}
+            panel.classList.add('on');
+            overlay.classList.add('on');
+        }
 
-function triggerZone(zoneId) {
-    document.getElementById('hs-' + zoneId).click();
-}
+        function triggerZone(zoneId) {
+            document.getElementById('hs-' + zoneId).click();
+        }
 
-function closePanel() {
-    panel.classList.remove('on');
-    overlay.classList.remove('on');
-}
+        function closePanel() {
+            panel.classList.remove('on');
+            overlay.classList.remove('on');
+        }
 
-document.addEventListener('click', e => {
-    if (!e.target.closest('.hotspot') && !e.target.closest('.popup')) {
-        popup.classList.remove('show');
-    }
-});
-</script>
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.hotspot') && !e.target.closest('.popup')) {
+                popup.classList.remove('show');
+            }
+        });
+    </script>
 </body>
+
 </html>

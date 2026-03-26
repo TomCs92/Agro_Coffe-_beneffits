@@ -15,10 +15,12 @@
             --text:  #e8ece9;
             --muted: #607066;
             --green: #4ade80;
-            --c1: #26C6DA;
-            --c2: #F4B41A;
-            --c3: #E53935;
-            --c4: #4CAF50;
+            --c5:  #9B59B6;   /* Drone        — Violeta       */
+            --c6:  #27AE60;   /* Restauración — Verde esmeralda */
+            --c7:  #E67E22;   /* Biodigestor  — Naranja        */
+            --c8:  #2980B9;   /* Bocatoma     — Azul           */
+            --c9:  #1ABC9C;   /* Conservación — Turquesa       */
+            --c10: #C0892B;   /* Compostaje   — Café/Tierra    */
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
@@ -295,10 +297,10 @@
 
         <!-- Carga de imagen -->
         <div class="sb-section" style="padding-top:20px">
-            <div class="sb-title">Imagen de la finca</div>
+            <div class="sb-title">Imagen de la finca — v2</div>
             <div class="img-drop" onclick="document.getElementById('img-file').click()">
                 <i class="fa-solid fa-image"></i>
-                <p><strong>Cargar imagen</strong><br>finca-isometrica.jpg<br>o haz clic para seleccionar</p>
+                <p><strong>Cargar imagen</strong><br>finca-isometrica-v2.png<br>o arrastra aquí para seleccionar</p>
             </div>
             <input type="file" id="img-file" accept="image/*" onchange="loadImage(this)">
             <div class="img-info" id="img-info">
@@ -353,13 +355,22 @@
 
 <script>
 /* ================================================================
-   DEFINICIÓN DE HOTSPOTS — edita nombres, ids y colores aquí
+   DEFINICIÓN DE HOTSPOTS — todos los puntos (viejos + nuevos)
    ================================================================ */
 const HOTSPOTS = [
-    { id: 'gateway',    name: 'Gateway / La Finca', color: '#26C6DA', relTop: 16, relLeft: 31 },
-    { id: 'marquesina', name: 'Marquesina',          color: '#F4B41A', relTop: 58, relLeft: 24 },
-    { id: 'beneficio',  name: 'Beneficio',            color: '#E53935', relTop: 54, relLeft: 72 },
-    { id: 'clima',      name: 'Estación Clima',       color: '#4CAF50', relTop: 34, relLeft: 55 },
+    /* ── Hotspots originales ─────────────────────── */
+    { id: 'gateway',      name: 'Gateway / La Finca',    color: '#26C6DA', relTop: 28, relLeft: 22 },
+    { id: 'marquesina',   name: 'Marquesina',            color: '#F4B41A', relTop: 55, relLeft: 22 },
+    { id: 'beneficio',    name: 'Beneficio',             color: '#E53935', relTop: 47, relLeft: 60 },
+    { id: 'clima',        name: 'Clima / Estación',      color: '#4CAF50', relTop: 20, relLeft: 72 },
+    /* ── Hotspots nuevos v2 ──────────────────────── */
+    { id: 'drone',        name: 'Drone / Satelital',     color: '#9B59B6', relTop: 27, relLeft: 46 },
+    { id: 'restauracion', name: 'Área de Restauración',  color: '#27AE60', relTop: 33, relLeft: 57 },
+    { id: 'biodigestor',  name: 'Biodigestor',           color: '#E67E22', relTop: 36, relLeft: 76 },
+    { id: 'bocatoma',     name: 'Bocatoma',              color: '#2980B9', relTop: 50, relLeft: 52 },
+    { id: 'conservacion', name: 'Área de Conservación', color: '#1ABC9C', relTop: 22, relLeft: 40 },
+    { id: 'compostaje',   name: 'Compostaje',            color: '#C0892B', relTop: 71, relLeft: 50 },
+    { id: 'bodega',       name: 'Bodega / Almacenamiento', color: '#BDC81E', relTop: 62, relLeft: 30 },
 ];
 
 let selectedId = null;
@@ -565,7 +576,23 @@ function exportCode() {
 
 function copyCode() {
     const txt = document.getElementById('code-text').textContent;
-    navigator.clipboard.writeText(txt).then(() => showToast('Código copiado al portapapeles'));
+    /* Fallback para file:// donde clipboard API no está disponible */
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(txt).then(() => showToast('Código copiado al portapapeles'));
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = txt;
+        ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try {
+            document.execCommand('copy');
+            showToast('Código copiado al portapapeles');
+        } catch(e) {
+            showToast('Selecciona el texto y copia manualmente (Ctrl+C)');
+        }
+        document.body.removeChild(ta);
+    }
 }
 
 function showToast(msg) {
